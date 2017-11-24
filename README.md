@@ -14,7 +14,7 @@
         - **lock-zk-spring-boot-starter-parent**：封装基于zookeeper的分布式锁，可使用注解的方式
         - **tbschedule-spring-boot-starter-parent**：封装tbschedule的starter，在properties按照spring boot的格式配置zk即可
         - **zuul-route-spring-boot-starter-parent**：封装zuul动态路由的starter，包含基于redis、db、zk的三种方式
-    - **tools-parent：自定义工具的根目录
+    - **tools-parent**：自定义工具的根目录
         - **tools-eureka-admin-parent**：eureka的应用节点管理工具，配合eureka-spring-boot-starter-parent使用，可以动态停用启用应用节点
         - **tools-generator**：基于mysql的自动生成model、mybatis mapper xml、dao的工具，用起来不是太方便，并且只适合特定的代码结构
         - **tools-log-appender-parent**：封装日志appender，目前只包含基于kafka的日志
