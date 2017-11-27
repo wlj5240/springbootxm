@@ -23,7 +23,7 @@ public @interface RedisLock {
 	String value() default "";
 	
 	/**
-     * 持锁时间,单位毫秒,默认一分钟
+     * 持锁时间,单位毫秒
      */
 	long keepMills() default 30000;
 	
@@ -40,11 +40,10 @@ public @interface RedisLock {
     }
 	
 	/**
-     * 睡眠时间,设置GIVEUP忽略此项
-     * @return
+     * 重试的间隔时间,设置GIVEUP忽略此项
      */
-    long sleepMills() default 500;
+    long sleepMills() default 200;
     
     /** 重试次数*/
-    int retryTimes() default Integer.MAX_VALUE;
+    int retryTimes() default 5;
 }

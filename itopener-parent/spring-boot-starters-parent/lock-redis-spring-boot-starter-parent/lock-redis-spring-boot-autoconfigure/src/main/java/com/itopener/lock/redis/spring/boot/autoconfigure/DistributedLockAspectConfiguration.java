@@ -50,18 +50,23 @@ public class DistributedLockAspectConfiguration {
 			Object[] args = pjp.getArgs();
 			key = Arrays.toString(args);
 		}
-		int retryTimes = redisLock.action().equals(LockFailAction.CONTINUE) ? redisLock.retryTimes() : 1;
+		int retryTimes = redisLock.action().equals(LockFailAction.CONTINUE) ? redisLock.retryTimes() : 0;
 		boolean lock = distributedLock.lock(key, redisLock.keepMills(), retryTimes, redisLock.sleepMills());
-		Object obj = null;
-		if(lock){
-			//得到锁,执行方法，释放锁
-			logger.info("get lock success : " + key);
-			obj = pjp.proceed();
-			distributedLock.releaseLock(key);
-			logger.info("release lock : " + key);
-		} else{
-			logger.info("get lock failed : " + key);
+		if(!lock) {
+			logger.debug("get lock failed : " + key);
+			return null;
 		}
-		return obj;
+		
+		//得到锁,执行方法，释放锁
+		logger.debug("get lock success : " + key);
+		try {
+			return pjp.proceed();
+		} catch (Exception e) {
+			logger.error("execute locked method occured an exception", e);
+		} finally {
+			boolean releaseResult = distributedLock.releaseLock(key);
+			logger.debug("release lock : " + key + (releaseResult ? " success" : " failed"));
+		}
+		return null;
 	}
 }
