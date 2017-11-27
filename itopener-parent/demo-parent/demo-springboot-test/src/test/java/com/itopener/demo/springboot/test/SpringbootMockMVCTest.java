@@ -1,4 +1,4 @@
-package com.itopener.tools.redis.controller;
+package com.itopener.demo.springboot.test;
 
 import javax.annotation.Resource;
 
@@ -15,8 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
-import com.itopener.tools.redis.Application;
-
 @SpringBootTest(classes = Application.class)
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = { "dev" })
@@ -31,7 +29,7 @@ public class SpringbootMockMVCTest {
 	@Test
 	public void test() {
 		try {
-			mockMvc.perform(MockMvcRequestBuilders.get("/redis/index").accept(MediaType.APPLICATION_JSON))
+			mockMvc.perform(MockMvcRequestBuilders.get("/springboot/index").accept(MediaType.APPLICATION_JSON))
 					.andDo(MockMvcResultHandlers.print());
 		} catch (Exception e) {
 			logger.error("exception", e);

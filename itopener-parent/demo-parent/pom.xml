@@ -38,5 +38,6 @@
 		<module>demo-session-parent</module>
     <module>demo-zipkin-parent</module>
     <module>demo-springcloud-config-parent</module>
+    <module>demo-springboot-test</module>
   </modules>
 </project>

@@ -1,4 +1,4 @@
-package com.itopener.tools.redis.controller;
+package com.itopener.demo.springboot.test;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +23,7 @@ public class SpringbootRandomPortTest {
 	
 	@Test
 	public void test() {
-		String resultMap = restTemplate.getForObject("/redis/index", String.class);
+		String resultMap = restTemplate.getForObject("/springboot/index", String.class);
 		logger.info(resultMap);
 	}
 }
