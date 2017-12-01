@@ -64,8 +64,13 @@ ul {
 }
 
 .admin-sidebar-list li.am-active a {
-	background-color: #ddd;
+	background-color: #eee;
 	font-weight: 700;
+}
+
+.admin-sidebar-list li a:hover {
+	background-color: #eee;
+	font-weight: 550;
 }
 
 .admin-sidebar-list li:first-child {
