@@ -64,22 +64,6 @@ $.extend({
  		var data = {
  			"resultCode": {
  				"success": "000001"
- 			},
- 			"integralProj": {
- 				"status": {
- 					"1": "启用",
- 					"0": "停用"
- 				}
- 			},
- 			"integralRule": {
- 				"status": {
- 					"1": "启用",
- 					"0": "停用"
- 				},
- 				"integralMode": {
- 					"1": "+",
- 					"2": "-"
- 				}
  			}
  		}
  		return this.getjson(data, key);

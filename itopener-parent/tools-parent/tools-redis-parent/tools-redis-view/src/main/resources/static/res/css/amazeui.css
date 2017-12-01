@@ -3097,7 +3097,7 @@ fieldset[disabled] .am-checkbox-inline {
  ============================================================================ */
 .am-topbar {
   position: relative;
-  min-height: 50px;
+  min-height: 40px;
   margin-bottom: 1.6rem;
   background: #f8f8f8;
   border-width: 0 0 1px;
@@ -3166,8 +3166,8 @@ fieldset[disabled] .am-checkbox-inline {
   padding: 0 10px;
   float: left;
   font-size: 1.8rem;
-  height: 50px;
-  line-height: 50px;
+  height: 40px;
+  line-height: 40px;
 }
 .am-topbar-toggle {
   position: relative;
@@ -3199,7 +3199,7 @@ fieldset[disabled] .am-checkbox-inline {
   }
   .am-topbar-nav > li > a {
     position: relative;
-    line-height: 50px;
+    line-height: 40px;
     padding: 0 10px;
   }
   .am-topbar-nav > li > a:after {
@@ -3285,10 +3285,10 @@ fieldset[disabled] .am-checkbox-inline {
 .am-topbar-inverse {
   background-color: #0e90d2;
   border-color: #0b6fa2;
-  color: #eeeeee;
+  color: #fff;
 }
 .am-topbar-inverse a {
-  color: #eeeeee;
+  color: #fff;
 }
 .am-topbar-inverse .am-topbar-brand a {
   color: #fff;
@@ -7044,7 +7044,7 @@ a.am-close:hover {
 }
 /* Panel content */
 .am-panel-bd {
-  padding: 1.25rem;
+  padding: 0.5rem 1.25rem;
 }
 .am-panel-title {
   margin: 0;

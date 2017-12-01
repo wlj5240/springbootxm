@@ -142,6 +142,7 @@
 		
 		//绑定菜单点击事件
 		$('#sidebarList').on('click', 'a[data-url]', function(){
+			$('#sidebarList li').removeClass('am-active');
 			var url = $(this).data('url');
 			$(this).parent().addClass("am-active");
 			$.ajax({

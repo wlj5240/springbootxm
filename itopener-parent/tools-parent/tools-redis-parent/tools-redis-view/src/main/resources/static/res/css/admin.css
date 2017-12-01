@@ -36,7 +36,7 @@ ul {
 .admin-main {
 	position: relative;
 	height: 100%;
-	padding-top: 51px;
+	padding-top: 41px;
 	background: #f3f3f3;
 }
 
@@ -54,10 +54,6 @@ ul {
 	border-right: 1px solid #cecece;
 }
 
-.admin-sidebar.am-active {
-	z-index: 1600;
-}
-
 .admin-sidebar-list {
 	margin-bottom: 0;
 }
@@ -65,6 +61,11 @@ ul {
 .admin-sidebar-list li a {
 	color: #5c5c5c;
 	padding-left: 24px;
+}
+
+.admin-sidebar-list li.am-active a {
+	background-color: #ddd;
+	font-weight: 700;
 }
 
 .admin-sidebar-list li:first-child {
