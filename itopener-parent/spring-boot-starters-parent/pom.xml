@@ -24,5 +24,6 @@
     <module>eureka-spring-boot-starter-parent</module>
     <module>hadoop-spring-boot-starter-parent</module>
     <module>ratelimiter-spring-boot-starter-parent</module>
+    <module>zk-spring-boot-starter-parent</module>
   </modules>
 </project>
