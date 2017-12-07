@@ -360,6 +360,36 @@ public class Generator {
 		StringBuilder fields = new StringBuilder();
 		StringBuilder fieldsMethod = new StringBuilder();
 		
+		//分页参数
+		fields.append("\n\t/** ").append("分页查询--页数*/\n");
+		fields.append("\tprivate int page;\n");
+		fields.append("\n\t/** ").append("分页查询--每页数量*/\n");
+		fields.append("\tprivate int size;\n");
+		fields.append("\n\t/** ").append("排序*/\n");
+		fields.append("\tprivate String orderBy;\n");
+		//分页参数getter and setter
+		fieldsMethod.append("\n\tpublic ").append(table.getConditionClassName()).append(" setPage(int page) {\n");
+		fieldsMethod.append("\t\tthis.page = page;\n");
+		fieldsMethod.append("\t\treturn this;\n");
+		fieldsMethod.append("\t}\n");
+		fieldsMethod.append("\n\tpublic int getPage() {\n");
+		fieldsMethod.append("\t\treturn page;\n");
+		fieldsMethod.append("\t}\n");
+		fieldsMethod.append("\n\tpublic ").append(table.getConditionClassName()).append(" setSize(int size) {\n");
+		fieldsMethod.append("\t\tthis.size = size;\n");
+		fieldsMethod.append("\t\treturn this;\n");
+		fieldsMethod.append("\t}\n");
+		fieldsMethod.append("\n\tpublic int getSize() {\n");
+		fieldsMethod.append("\t\treturn size;\n");
+		fieldsMethod.append("\t}\n");
+		fieldsMethod.append("\n\tpublic ").append(table.getConditionClassName()).append(" setOrderBy(String orderBy) {\n");
+		fieldsMethod.append("\t\tthis.orderBy = orderBy;\n");
+		fieldsMethod.append("\t\treturn this;\n");
+		fieldsMethod.append("\t}\n");
+		fieldsMethod.append("\n\tpublic String getOrderBy() {\n");
+		fieldsMethod.append("\t\treturn orderBy;\n");
+		fieldsMethod.append("\t}\n");
+		
 		//范围查询条件属性
 		for(String item: whereRangeColumnsSet){
 			TableField field = Utils.getTableField(table.getAllField(), item);
@@ -367,7 +397,6 @@ public class Generator {
 				continue;
 			}
 			
-			//field declare
 			fields.append("\n\t/** ").append(StringUtils.isNullOrEmpty(field.getComment()) ? field.getFieldName() : field.getComment()).append("--最小值*/\n");
 			fields.append("\tprivate ").append(field.getTypeName()).append(" ").append(field.getMinFieldName()).append(";\n");
 			fields.append("\n\t/** ").append(StringUtils.isNullOrEmpty(field.getComment()) ? field.getFieldName() : field.getComment()).append("--最大值*/\n");
@@ -748,12 +777,21 @@ public class Generator {
 		mapper.append("\t\tselect <include refid=\"Column_List\" />\n");
 		mapper.append("\t\tfrom ").append(table.getTableName()).append("\n");
 		mapper.append("\t\t<include refid=\"Where\" />\n");
+		
+//		mapper.append("\t\t<if test=\"offset > 0\">\n");
+//		mapper.append("\t\t\tlimit #{rows}, #{offset}\n");
+//		mapper.append("\t\t</if>\n");
+//		mapper.append("\t\t<if test=\"orderBy != null and orderBy != ''\">\n");
+//		mapper.append("\t\t\torder by ${orderBy}\n");
+//		mapper.append("\t\t</if>\n");
+		
+		
 		mapper.append("\t</select>\n");
 	}
 	
 	private void selectCount(StringBuilder mapper, TableObject table){
 		mapper.append("\n\t<select id=\"selectCount\" parameterType=\"").append(table.getConditionClassFullName()).append("\"");
-		mapper.append(" resultType=\"int\">\n");
+		mapper.append(" resultType=\"java.lang.Long\">\n");
 		mapper.append("\t\tselect count(");
 		if(table.getPrimaryKeys().size() == 1){
 			mapper.append(table.getPrimaryKeys().get(0).getColumnName());
@@ -823,7 +861,7 @@ public class Generator {
 		dao.append("\t}\n");
 		
 		//selectCount
-		dao.append("\n\tpublic int").append(" selectCount(").append(table.getConditionClassName()).append(" condition) {\n");
+		dao.append("\n\tpublic long").append(" selectCount(").append(table.getConditionClassName()).append(" condition) {\n");
 		dao.append("\t\treturn ").append(baseDaoFieldName).append(".selectOne(NAMESPACE + \"selectCount\", condition);\n");
 		dao.append("\t}\n");
 		

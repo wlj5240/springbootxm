@@ -64,6 +64,12 @@ $.extend({
  		var data = {
  			"resultCode": {
  				"success": "000001"
+ 			},
+ 			app: {
+ 				state: {
+ 					"1": "启用",
+ 					"2": "禁用"
+ 				}
  			}
  		}
  		return this.getjson(data, key);
@@ -242,6 +248,19 @@ $.fn.extend({
 			$(this).val($.trim($(this).val())); 
 		});
 		return $(this);
+	},
+	
+	resetForm: function(){
+		$(this).find('input, textarea').each(function(){
+			$(this).addClass('reset-temp')
+		});
+		$(this).find('input[type="radio"]:first').prop('checked', true);
+		$(this).find('input[type="radio"]').removeClass('reset-temp');
+		$(this).find('input[type="checkbox"]').prop('checked', false);
+		$(this).find('input[type="checkbox"]').removeClass('reset-temp');
+		$(this).find('input.reset-temp, textarea').each(function(){
+			$(this).val('');
+		});
 	},
 	
 	/**

@@ -14,7 +14,7 @@ public enum FieldType {
 	TIMESTAMP("Timestamp", "java.sql.Timestamp", 3, "java.sql.Timestamp", "TIMESTAMP"),
 	OTHER("Object", "", 3, "java.lang.Object", "OTHER"),
 	UNDEFINED("Object", "", 3, "java.lang.Object", "UNDEFINED"),
-	TINYINT("byte", "", 1, "java.lang.Byte", "TINYINT"),
+	TINYINT("int", "", 1, "java.lang.Integer", "INTEGER"),
 	REAL("float", "", 1, "java.lang.Float", "REAL"),
 	VARCHAR("String", "", 2, "java.lang.String", "VARCHAR"),
 	BINARY("byte[]", "", 3, "", "BINARY"),

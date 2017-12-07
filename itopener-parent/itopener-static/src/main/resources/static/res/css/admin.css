@@ -381,3 +381,8 @@ gallery.html css
 #nodeTree a {
 	color: #000;
 }
+
+#pagingDiv .am-form select {
+	padding: 0.35em;
+	font-weight: 400;
+}
