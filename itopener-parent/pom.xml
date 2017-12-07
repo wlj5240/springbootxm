@@ -163,6 +163,7 @@
 		<module>tools-parent</module>
 		<module>demo-parent</module>
     <module>memo-parent</module>
+    <module>itopener-static</module>
   </modules>
 
 	<repositories>

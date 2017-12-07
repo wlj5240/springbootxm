@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.itopener</groupId>
-			<artifactId>tools-static</artifactId>
+			<artifactId>itopener-static</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

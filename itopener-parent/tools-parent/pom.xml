@@ -21,6 +21,5 @@
 		<module>tools-generator</module>
 		<module>tools-eureka-admin-parent</module>
 		<module>tools-zookeeper-parent</module>
-		<module>tools-static</module>
 	</modules>
 </project>
