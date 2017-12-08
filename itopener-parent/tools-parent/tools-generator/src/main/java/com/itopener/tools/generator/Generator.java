@@ -781,9 +781,9 @@ public class Generator {
 //		mapper.append("\t\t<if test=\"offset > 0\">\n");
 //		mapper.append("\t\t\tlimit #{rows}, #{offset}\n");
 //		mapper.append("\t\t</if>\n");
-//		mapper.append("\t\t<if test=\"orderBy != null and orderBy != ''\">\n");
-//		mapper.append("\t\t\torder by ${orderBy}\n");
-//		mapper.append("\t\t</if>\n");
+		mapper.append("\t\t<if test=\"orderBy != null and orderBy != ''\">\n");
+		mapper.append("\t\t\torder by ${orderBy}\n");
+		mapper.append("\t\t</if>\n");
 		
 		
 		mapper.append("\t</select>\n");

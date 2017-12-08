@@ -261,6 +261,9 @@ $.fn.extend({
 		$(this).find('input.reset-temp, textarea').each(function(){
 			$(this).val('');
 		});
+		$(this).find('select').each(function(){
+			$(this).val($(this).find('option:first').attr('value'));
+		});
 	},
 	
 	/**
