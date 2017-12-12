@@ -60,20 +60,6 @@ $.extend({
 			return obj;
 		}
  	},
- 	enums: function(key){
- 		var data = {
- 			"resultCode": {
- 				"success": "000001"
- 			},
- 			app: {
- 				state: {
- 					"1": "启用",
- 					"2": "禁用"
- 				}
- 			}
- 		}
- 		return this.getjson(data, key);
- 	},
  	confirm : function(title, msg, callback) {
  		if($('#confirmModal').length < 1){
  			var confirmModal = '<div class="modal fade" tabindex="-1" role="dialog" id="confirmModal">'
@@ -355,6 +341,12 @@ $.fn.extend({
                 //错误方法增强处理  
             	if(_option.shade == 1){
             		layer.close(loadDialogIndex);
+            	}
+            	if(xhr && xhr.status == '404'){
+            		layer.msg('未找到请求资源(404)');
+            	}
+            	if(xhr && xhr.status == '500'){
+            		layer.msg('系统内部异常(500)');
             	}
             	if(xhr && xhr.responseJSON && xhr.responseJSON.exception){
             		layer.msg(xhr.responseJSON.status + '<br/>' + xhr.responseJSON.exception + '<br/>' + xhr.responseJSON.message);
