@@ -10,6 +10,6 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(value=RetentionPolicy.RUNTIME)
 public @interface AuthorityRequired {
-
-	byte[] role() default {};
+	
+	boolean authority() default true;
 }

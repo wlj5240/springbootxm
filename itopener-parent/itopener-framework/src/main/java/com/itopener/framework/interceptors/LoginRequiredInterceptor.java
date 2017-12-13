@@ -9,6 +9,8 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.alibaba.fastjson.JSON;
+import com.itopener.framework.FrameworkConstants;
+import com.itopener.framework.base.BaseRuntimeException;
 
 /**  
  * @author fuwei.deng
@@ -46,9 +48,17 @@ private final Logger log = LoggerFactory.getLogger(LoginRequiredInterceptor.clas
 			return true;
 		}
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
+		
+		boolean authority = false;
 		LoginRequired loginRequired = handlerMethod.getMethodAnnotation(LoginRequired.class);
-		if(loginRequired == null){
-			return true;
+		if(loginRequired == null) {
+			loginRequired = handlerMethod.getBeanType().getAnnotation(LoginRequired.class);
+		}
+		if(loginRequired != null) {
+			authority = loginRequired.authority();
+		}
+		if(!authority) {
+			return super.preHandle(request, response, handler);
 		}
 		
 		long userId = sessionUser.isLogin(request);
@@ -56,7 +66,7 @@ private final Logger log = LoggerFactory.getLogger(LoginRequiredInterceptor.clas
 
 		log.info(userId + "===" + request.getRequestURI() + "===" + JSON.toJSONString(request.getParameterMap()));
 		if(userId == 0){
-//			throw new BaseRuntimeException(FrameworkConstants.EXCEPTION_CODE_1001, "当前用户未登录或登录超时");
+			throw new BaseRuntimeException(FrameworkConstants.EXCEPTION_CODE_1001, "当前用户未登录或登录超时");
 		}
 		return super.preHandle(request, response, handler);
 	}

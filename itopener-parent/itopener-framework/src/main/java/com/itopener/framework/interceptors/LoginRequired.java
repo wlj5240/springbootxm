@@ -11,4 +11,5 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(value=RetentionPolicy.RUNTIME)
 public @interface LoginRequired {
 
+	boolean authority() default true;
 }

@@ -362,6 +362,9 @@ $.fn.extend({
             	}
             	if(typeof data == "object" && data.flag != 'success'){
             		layer.msg(data.msg);
+            		if(data.flag == '1001'){
+            			location.href = '/views/login.html';
+            		}
             		return false;
             	}
             	_option.success(data);  

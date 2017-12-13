@@ -45,9 +45,17 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		HandlerMethod handlerMethod = (HandlerMethod) handler;
+		
+		boolean authority = false;
 		AuthorityRequired authorityRequired = handlerMethod.getMethodAnnotation(AuthorityRequired.class);
-		if(authorityRequired == null){
-			return true;
+		if(authorityRequired == null) {
+			authorityRequired = handlerMethod.getBeanType().getAnnotation(AuthorityRequired.class);
+		}
+		if(authorityRequired != null) {
+			authority = authorityRequired.authority();
+		}
+		if(!authority) {
+			return super.preHandle(request, response, handler);
 		}
 		
 		String controller = handlerMethod.getBean().getClass().getSimpleName();
