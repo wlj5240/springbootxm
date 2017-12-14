@@ -1,8 +1,8 @@
 package com.itopener.ratelimiter.spring.boot.autoconfigure;
 
 import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+
+import javax.annotation.Resource;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.google.common.util.concurrent.RateLimiter;
 import com.itopener.ratelimiter.spring.boot.autoconfigure.annotations.GuavaRateLimiter;
+import com.itopener.ratelimiter.spring.boot.autoconfigure.support.RateLimiterHandler;
 
 @Aspect
 @Configuration
@@ -24,7 +25,8 @@ public class RateLimiterAspectAutoConfiguration {
 
 	private final Logger logger = LoggerFactory.getLogger(RateLimiterAspectAutoConfiguration.class);
 	
-	private Map<String, RateLimiter> rateLimiterMap = new ConcurrentHashMap<String, RateLimiter>();
+	@Resource
+	private RateLimiterHandler rateLimiterHandler;
 	
 	@Pointcut("@annotation(com.itopener.ratelimiter.spring.boot.autoconfigure.annotations.GuavaRateLimiter)")
 	private void rateLimiterPoint(){
@@ -36,7 +38,7 @@ public class RateLimiterAspectAutoConfiguration {
 		Method method = ((MethodSignature) pjp.getSignature()).getMethod();
 		GuavaRateLimiter guavaRateLimiter = method.getAnnotation(GuavaRateLimiter.class);
 		
-		if(!tryAcquire(guavaRateLimiter)) {
+		if(!rateLimiterHandler.tryAcquire(guavaRateLimiter)) {
 			logger.warn("[{}] has over limit", guavaRateLimiter.value());
 			return null;
 		}
@@ -49,12 +51,4 @@ public class RateLimiterAspectAutoConfiguration {
 		return null;
 	}
 	
-	public boolean tryAcquire(GuavaRateLimiter guavaRateLimiter) {
-		RateLimiter rateLimiter = rateLimiterMap.get(guavaRateLimiter.value());
-		if(rateLimiter == null) {
-			rateLimiter = RateLimiter.create(guavaRateLimiter.permitsPerSecond());
-			rateLimiterMap.put(guavaRateLimiter.value(), rateLimiter);
-		}
-		return rateLimiter.tryAcquire(guavaRateLimiter.permits(), guavaRateLimiter.timeout(), guavaRateLimiter.timeUnit());
-	}
 }
