@@ -31,4 +31,7 @@ public @interface GuavaRateLimiter {
 	
 	/** 获取许可超时时间单位*/
 	TimeUnit timeUnit() default TimeUnit.MICROSECONDS;
+	
+	/** 超过限流值时抛出的异常*/
+	Class<? extends RuntimeException> exception();
 }

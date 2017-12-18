@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.itopener.framework.ResultMap;
+import com.itopener.framework.base.BaseRuntimeException;
 import com.itopener.ratelimiter.spring.boot.autoconfigure.annotations.GuavaRateLimiter;
 
 @RestController
@@ -28,7 +29,7 @@ public class RateLimiterController {
 	private RestTemplate restTemplate;
 
 	@GetMapping("index")
-	@GuavaRateLimiter(permitsPerSecond = 1)
+	@GuavaRateLimiter(permitsPerSecond = 1, exception = BaseRuntimeException.class)
 	public ResultMap index(){
 		logger.info("execute RateLimiterController method : index()");
 		return ResultMap.buildSuccess();

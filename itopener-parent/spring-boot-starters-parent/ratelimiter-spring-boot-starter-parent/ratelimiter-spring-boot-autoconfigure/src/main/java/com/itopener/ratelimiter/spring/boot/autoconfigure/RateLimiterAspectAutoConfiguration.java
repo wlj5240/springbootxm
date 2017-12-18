@@ -40,6 +40,9 @@ public class RateLimiterAspectAutoConfiguration {
 		
 		if(!rateLimiterHandler.tryAcquire(guavaRateLimiter)) {
 			logger.warn("[{}] has over limit", guavaRateLimiter.value());
+			if(guavaRateLimiter.exception() != null) {
+				throw guavaRateLimiter.exception().getConstructor(String.class).newInstance("[{" + guavaRateLimiter.value() + "}] has over limit");
+			}
 			return null;
 		}
 		
