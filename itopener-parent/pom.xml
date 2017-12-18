@@ -24,11 +24,10 @@
 		<curator-client.version>2.11.1</curator-client.version>
 		<pagehelper-starter.version>1.1.0</pagehelper-starter.version>
 		<mybatis-starter.version>1.2.0</mybatis-starter.version>
-		<sharding-jdbc.version>1.4.2</sharding-jdbc.version>
+		<sharding-jdbc.version>2.0.1</sharding-jdbc.version>
 		<druid.version>1.0.29</druid.version>
 		<tbschedule.version>3.3.3.2</tbschedule.version>
 		<spring-boot-admin.version>1.5.0</spring-boot-admin.version>
-		<elastic-job-lite.version>2.1.4</elastic-job-lite.version>
 		<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
 		<spring-data-hadoop.version>2.5.0.RELEASE</spring-data-hadoop.version>
 	</properties>
@@ -131,21 +130,15 @@
 			</dependency>
 
 			<dependency>
-				<groupId>com.dangdang</groupId>
+				<groupId>io.shardingjdbc</groupId>
+				<artifactId>sharding-jdbc-core-spring-boot-starter</artifactId>
+				<version>${sharding-jdbc.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>io.shardingjdbc</groupId>
 				<artifactId>sharding-jdbc-core</artifactId>
 				<version>${sharding-jdbc.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.dangdang</groupId>
-				<artifactId>sharding-jdbc-transaction</artifactId>
-				<version>${sharding-jdbc.version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>com.dangdang</groupId>
-				<artifactId>elastic-job-lite-spring</artifactId>
-				<version>${elastic-job-lite.version}</version>
 			</dependency>
 			
 			<dependency>

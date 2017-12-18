@@ -40,5 +40,6 @@
     <module>demo-springcloud-config-parent</module>
     <module>demo-springboot-test</module>
     <module>demo-ratelimiter-parent</module>
+    <module>demo-shardingjdbc-parent</module>
   </modules>
 </project>
