@@ -163,7 +163,6 @@
 		<module>spring-boot-starters-parent</module>
 		<module>tools-parent</module>
 		<module>demo-parent</module>
-		<module>memo-parent</module>
 		<module>itopener-static-parent</module>
 	</modules>
 
