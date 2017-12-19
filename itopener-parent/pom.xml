@@ -31,6 +31,7 @@
 		<spring-boot-admin.version>1.5.0</spring-boot-admin.version>
 		<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
 		<spring-data-hadoop.version>2.5.0.RELEASE</spring-data-hadoop.version>
+		<elastic-job.version>2.1.5</elastic-job.version>
 	</properties>
 
 	<dependencyManagement>
@@ -140,6 +141,12 @@
 				<groupId>io.shardingjdbc</groupId>
 				<artifactId>sharding-jdbc-core</artifactId>
 				<version>${sharding-jdbc.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>com.dangdang</groupId>
+			    <artifactId>elastic-job-lite-spring</artifactId>
+			    <version>${elastic-job.version}</version>
 			</dependency>
 
 			<dependency>
