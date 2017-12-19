@@ -41,5 +41,6 @@
     <module>demo-springboot-test</module>
     <module>demo-ratelimiter-parent</module>
     <module>demo-shardingjdbc-parent</module>
+    <module>demo-amazeui</module>
   </modules>
 </project>
