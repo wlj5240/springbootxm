@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.itopener</groupId>
-			<artifactId>itopener-static</artifactId>
+			<artifactId>itopener-amazeui</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
