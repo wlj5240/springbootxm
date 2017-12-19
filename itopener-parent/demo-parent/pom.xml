@@ -42,5 +42,6 @@
     <module>demo-ratelimiter-parent</module>
     <module>demo-shardingjdbc-parent</module>
     <module>demo-amazeui</module>
+    <module>demo-layui</module>
   </modules>
 </project>
