@@ -33,6 +33,7 @@ public class OrderService {
 		for(OrderItem orderItem : order.getOrderItemList()) {
 			orderItemDao.insert(orderItem);
 		}
+		throw new RuntimeException("test transaction");
 	}
 	
 	@Transactional

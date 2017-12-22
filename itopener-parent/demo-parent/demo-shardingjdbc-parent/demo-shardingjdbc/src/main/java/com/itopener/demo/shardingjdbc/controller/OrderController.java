@@ -44,10 +44,10 @@ public class OrderController {
 	
 	@PostMapping("{userId}")
 	public ResultMap add(@PathVariable long userId){
-		for(long i = 0; i<100; i++) {
+		for(long i = 0; i<10; i++) {
 			Order order = new Order();
-//			order.setId(serialIdService.getSerialId());
-			order.setId(i + 1);
+			order.setId(serialIdService.getSerialId());
+//			order.setId(i + 1);
 			order.setState(new Random().nextInt(5) + 1);
 			order.setUserId(userId);
 			order.setUpdateTime(TimestampUtil.current());
