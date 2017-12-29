@@ -26,6 +26,7 @@ public class HystrtixRibbonService {
 	@HystrixCommand(fallbackMethod = "callFallback")
 	public ResultMap call(long id){
 		try {
+			Thread.sleep(5000);
 			return restTemplateBalanced.getForObject("http://" + HystrixClientConstant.EUREKA_SERVER_HYSTRIX + "/user/vo/" + id, ResultMap.class);
 		} catch (RestClientException e) {
 			logger.error("balanced rest exception", e);
