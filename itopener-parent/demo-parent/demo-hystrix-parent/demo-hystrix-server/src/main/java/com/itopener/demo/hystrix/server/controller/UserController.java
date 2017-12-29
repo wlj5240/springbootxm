@@ -19,6 +19,11 @@ public class UserController {
 	@RequestMapping("vo/{id}")
 	public ResultMap vo(@PathVariable long id) {
 		logger.info("hystrix server : " + id);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			logger.error("thread sleep InterruptedException", e);
+		}
 		UserVO user = new UserVO();
 		user.setId(id);
 		user.setName("name" + id);
