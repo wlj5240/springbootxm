@@ -5,7 +5,7 @@ package com.itopener.lock.redis.spring.boot.autoconfigure.lock;
  * @date 2017年6月14日 下午3:10:57
  * @version 1.0.0
  */
-public class AbstractDistributedLock implements DistributedLock {
+public abstract class AbstractDistributedLock implements DistributedLock {
 
 	@Override
 	public boolean lock(String key) {
@@ -30,16 +30,6 @@ public class AbstractDistributedLock implements DistributedLock {
 	@Override
 	public boolean lock(String key, long expire, int retryTimes) {
 		return lock(key, expire, retryTimes, SLEEP_MILLIS);
-	}
-
-	@Override
-	public boolean lock(String key, long expire, int retryTimes, long sleepMillis) {
-		return false;
-	}
-
-	@Override
-	public boolean releaseLock(String key) {
-		return false;
 	}
 
 }

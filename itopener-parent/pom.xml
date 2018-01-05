@@ -32,6 +32,7 @@
 		<spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
 		<spring-data-hadoop.version>2.5.0.RELEASE</spring-data-hadoop.version>
 		<elastic-job.version>2.1.5</elastic-job.version>
+		<redisson.version>3.5.6</redisson.version>
 	</properties>
 
 	<dependencyManagement>
@@ -153,6 +154,12 @@
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-hadoop</artifactId>
 				<version>${spring-data-hadoop.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.redisson</groupId>
+				<artifactId>redisson</artifactId>
+				<version>${redisson.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

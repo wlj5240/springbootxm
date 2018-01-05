@@ -44,5 +44,6 @@
     <module>demo-amazeui</module>
     <module>demo-layui</module>
     <module>demo-cache-redis-parent</module>
+    <module>demo-redisson</module>
   </modules>
 </project>

@@ -16,20 +16,13 @@ import java.lang.annotation.Target;
 @Inherited
 public @interface RedisLock {
 
-	/**
-     * redis的key
-     * @return
-     */
+	/** 锁的资源，redis的key*/
 	String value() default "";
 	
-	/**
-     * 持锁时间,单位毫秒
-     */
+	/** 持锁时间,单位毫秒*/
 	long keepMills() default 30000;
 	
-	/**
-     * 当获取失败时候动作
-     */
+	/** 当获取失败时候动作*/
 	LockFailAction action() default LockFailAction.CONTINUE;
 	
 	public enum LockFailAction{
@@ -39,9 +32,7 @@ public @interface RedisLock {
         CONTINUE;
     }
 	
-	/**
-     * 重试的间隔时间,设置GIVEUP忽略此项
-     */
+	/** 重试的间隔时间,设置GIVEUP忽略此项*/
     long sleepMills() default 200;
     
     /** 重试次数*/

@@ -2,6 +2,7 @@ package com.itopener.lock.redis.spring.boot.autoconfigure.lock;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 	
 	private RedisTemplate<Object, Object> redisTemplate;
 	
-	private ThreadLocal<Long> timeMillisLocal = new ThreadLocal<Long>();
+	private ThreadLocal<String> lockFlag = new ThreadLocal<String>();
 	
 	public static final String UNLOCK_LUA;
 
@@ -68,9 +69,9 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 				@Override
 				public String doInRedis(RedisConnection connection) throws DataAccessException {
 					JedisCommands commands = (JedisCommands) connection.getNativeConnection();
-					long timeMillis = System.currentTimeMillis();
-					timeMillisLocal.set(timeMillis);
-					return commands.set(key, String.valueOf(timeMillis), "NX", "PX", expire);
+					String uuid = UUID.randomUUID().toString();
+					lockFlag.set(uuid);
+					return commands.set(key, uuid, "NX", "PX", expire);
 				}
 			});
 			return !StringUtils.isEmpty(result);
@@ -87,10 +88,11 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 			List<String> keys = new ArrayList<String>();
 			keys.add(key);
 			List<String> args = new ArrayList<String>();
-			args.add(String.valueOf(timeMillisLocal.get()));
+			args.add(lockFlag.get());
 
 			// 使用lua脚本删除redis中匹配value的key，可以避免由于方法执行时间过长而redis锁自动过期失效的时候误删其他线程的锁
 			// spring自带的执行脚本方法中，集群模式直接抛出不支持执行脚本的异常，所以只能拿到原redis的connection来执行脚本
+			
 			Long result = redisTemplate.execute(new RedisCallback<Long>() {
 				public Long doInRedis(RedisConnection connection) throws DataAccessException {
 					Object nativeConnection = connection.getNativeConnection();
@@ -108,13 +110,6 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 				}
 			});
 			
-//			Long result = redisTemplate.execute(new RedisCallback<Long>() {
-//				@Override
-//				public Long doInRedis(RedisConnection connection) throws DataAccessException {
-//					JedisCommands commands = (JedisCommands) connection.getNativeConnection();
-//					return commands.del(key);
-//				}
-//			});
 			return result != null && result > 0;
 		} catch (Exception e) {
 			logger.error("release lock occured an exception", e);
