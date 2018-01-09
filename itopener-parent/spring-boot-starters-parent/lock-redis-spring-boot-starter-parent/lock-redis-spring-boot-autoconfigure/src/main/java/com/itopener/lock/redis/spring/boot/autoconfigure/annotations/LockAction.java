@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import org.springframework.core.annotation.AliasFor;
+
 /**
  * @author fuwei.deng
  * @date 2017年6月14日 下午3:10:36
@@ -14,10 +16,14 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
-public @interface RedisLock {
+public @interface LockAction {
 
-	/** 锁的资源，redis的key*/
-	String value() default "";
+	/** 锁的资源，key。支持spring El表达式*/
+	@AliasFor("key")
+	String value() default "'default'";
+	
+	@AliasFor("value")
+	String key() default "'default'";
 	
 	/** 持锁时间,单位毫秒*/
 	long keepMills() default 30000;

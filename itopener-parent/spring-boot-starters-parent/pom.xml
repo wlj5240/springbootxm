@@ -26,5 +26,6 @@
 		<module>ratelimiter-spring-boot-starter-parent</module>
 		<module>zk-spring-boot-starter-parent</module>
     <module>redisson-spring-boot-starter-parent</module>
+    <module>lock-redisson-spring-boot-starter-parent</module>
   </modules>
 </project>

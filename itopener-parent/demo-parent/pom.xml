@@ -45,5 +45,6 @@
     <module>demo-layui</module>
     <module>demo-cache-redis-parent</module>
     <module>demo-redisson</module>
+    <module>demo-lock-redisson</module>
   </modules>
 </project>

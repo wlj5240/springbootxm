@@ -1,17 +1,17 @@
-package com.itopener.demo.redislock.service;
+package com.itopener.demo.lock.redisson.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.itopener.lock.redis.spring.boot.autoconfigure.annotations.LockAction;
+import com.itopener.lock.redisson.spring.boot.autoconfigure.LockAction;
 
 @Service
-public class RedisLockService {
+public class RedissonLockService {
 
-	private final Logger logger = LoggerFactory.getLogger(RedisLockService.class);
+	private final Logger logger = LoggerFactory.getLogger(RedissonLockService.class);
 	
-	@LockAction
+	@LockAction("'updateKey'")
 	public void update(String key){
 		try {
 			Thread.sleep(5000);
