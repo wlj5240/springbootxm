@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itopener.demo.redislock.service.RedisLockService;
+import com.itopener.demo.redislock.vo.UserVO;
 import com.itopener.framework.ResultMap;
 import com.itopener.lock.redis.spring.boot.autoconfigure.lock.DistributedLock;
 
@@ -61,8 +62,13 @@ public class RedisLockController {
 		
 		@Override
 		public void run() {
-			String key = "lockKey2";
-			redisLockService.update(key);
+//			String key = "lockKey2";
+//			redisLockService.update(key);
+			
+			UserVO userVO = new UserVO();
+			userVO.setId(10L);
+			userVO.setName("fuwei.deng");
+			redisLockService.update(userVO);
 		}
 	}
 }
