@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.itopener.demo.lock.redisson.vo.UserVO;
 import com.itopener.lock.redisson.spring.boot.autoconfigure.LockAction;
+import com.itopener.lock.redisson.spring.boot.autoconfigure.LockType;
 
 @Service
 public class RedissonLockService {
@@ -21,12 +22,33 @@ public class RedissonLockService {
 		}
 	}
 	
-	@LockAction("#user.id")
-	public void update(UserVO user){
+	@LockAction("#userVO.id")
+	public void spel(UserVO userVO){
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			logger.error("exp", e);
 		}
+	}
+	
+	@LockAction(value = "#userVO.id", lockType = LockType.WRITE_LOCK, waitTime = 30000)
+	public void update(UserVO userVO){
+		logger.info("write user : {}", userVO.getId());
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			logger.error("exp", e);
+		}
+	}
+	
+	@LockAction(value = "#userVO.id", lockType = LockType.READ_LOCK, waitTime = 30000)
+	public UserVO read(UserVO userVO) {
+		logger.info("read user : {}", userVO.getId());
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			logger.error("exp", e);
+		}
+		return userVO;
 	}
 }

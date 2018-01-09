@@ -56,7 +56,7 @@ public class RedissonDistributedLockAspectConfiguration {
 		Object[] args = pjp.getArgs();
 		key = parse(key, method, args);
 		
-		RLock lock = redissonClient.getLock(key);
+		RLock lock = getLock(key, lockAction);
 		if(!lock.tryLock(lockAction.waitTime(), lockAction.leaseTime(), lockAction.unit())) {
 			logger.debug("get lock failed [{}]", key);
 			return null;
@@ -92,5 +92,24 @@ public class RedissonDistributedLockAspectConfiguration {
 			context.setVariable(params[i], args[i]);
 		}
 		return parser.parseExpression(key).getValue(context, String.class);
+	}
+	
+	private RLock getLock(String key, LockAction lockAction) {
+		switch (lockAction.lockType()) {
+			case REENTRANT_LOCK:
+				return redissonClient.getLock(key);
+			
+			case FAIR_LOCK:
+				return redissonClient.getFairLock(key);
+				
+			case READ_LOCK:
+				return redissonClient.getReadWriteLock(key).readLock();
+			
+			case WRITE_LOCK:
+				return redissonClient.getReadWriteLock(key).writeLock();
+				
+			default:
+				throw new RuntimeException("do not support lock type:" + lockAction.lockType().name());
+			}
 	}
 }

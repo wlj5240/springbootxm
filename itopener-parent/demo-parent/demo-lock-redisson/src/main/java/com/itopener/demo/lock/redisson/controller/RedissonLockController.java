@@ -22,7 +22,7 @@ public class RedissonLockController {
 	private final Logger logger = LoggerFactory.getLogger(RedissonLockController.class);
 
 	@Resource
-	private RedissonLockService redisLockService;
+	private RedissonLockService redissonLockService;
 	
 	@Resource
 	private RedissonClient redissonClient;
@@ -30,20 +30,28 @@ public class RedissonLockController {
 	@RequestMapping("aspect")
 	public ResultMap lockAspect(){
 		for(int i=0; i<10; i++){
-			new RedisLockAspectThread().start();
+			new RedissonLockAspectThread().start();
 		}
 		return ResultMap.buildSuccess();
+	}
+	
+	class RedissonLockAspectThread extends Thread {
+		
+		@Override
+		public void run() {
+			redissonLockService.update("updateKey");
+		}
 	}
 	
 	@RequestMapping("lock")
 	public ResultMap lock(){
 		for(int i=0; i<10; i++){
-			new RedisLockThread().start();
+			new RedissonLockThread().start();
 		}
 		return ResultMap.buildSuccess();
 	}
 	
-	class RedisLockThread extends Thread {
+	class RedissonLockThread extends Thread {
 
 		@Override
 		public void run() {
@@ -62,17 +70,61 @@ public class RedissonLockController {
 		}
 	}
 	
-	class RedisLockAspectThread extends Thread {
+	@RequestMapping("spel")
+	public ResultMap spel(){
+		for(int i=0; i<10; i++){
+			new RedissonLockSpELThread().start();
+		}
+		return ResultMap.buildSuccess();
+	}
+	
+	class RedissonLockSpELThread extends Thread {
 		
 		@Override
 		public void run() {
-//			String key = "lockKey2";
-//			redisLockService.update(key);
-			
 			UserVO userVO = new UserVO();
 			userVO.setId(20L);
 			userVO.setName("fuwei.deng");
-			redisLockService.update(userVO);
+			redissonLockService.spel(userVO);
 		}
 	}
+	
+	@RequestMapping("read")
+	public ResultMap read(){
+		for(int i=0; i<10; i++){
+			new RedissonLockReadThread().start();
+		}
+		return ResultMap.buildSuccess();
+	}
+	
+	class RedissonLockReadThread extends Thread {
+		
+		@Override
+		public void run() {
+			UserVO userVO = new UserVO();
+			userVO.setId(20L);
+			userVO.setName("fuwei.deng");
+			redissonLockService.read(userVO);
+		}
+	}
+	
+	@RequestMapping("write")
+	public ResultMap write(){
+		for(int i=0; i<10; i++){
+			new RedissonLockWriteThread().start();
+		}
+		return ResultMap.buildSuccess();
+	}
+	
+	class RedissonLockWriteThread extends Thread {
+		
+		@Override
+		public void run() {
+			UserVO userVO = new UserVO();
+			userVO.setId(20L);
+			userVO.setName("fuwei.deng");
+			redissonLockService.update(userVO);
+		}
+	}
+	
 }

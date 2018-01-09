@@ -26,6 +26,9 @@ public @interface LockAction {
 	@AliasFor("value")
 	String key() default "'default'";
 	
+	/** 锁类型*/
+	LockType lockType() default LockType.REENTRANT_LOCK;
+	
 	/** 获取锁等待时间，默认3秒*/
 	long waitTime() default 3000L;
 	
