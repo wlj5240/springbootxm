@@ -15,14 +15,14 @@ import com.itopener.redisson.spring.boot.autoconfigure.config.ConfigFile;
  */
 @ConfigurationProperties(prefix = "spring.redisson")
 public class RedissonProperties {
-	
-	/** 属性的配置方式*/
-	private Config config;
-	
-	/** 文件的配置方式*/
-    private ConfigFile configFile = new ConfigFile();
 
-    /** 方法注解缓存的配置*/
+	/** 属性的配置方式 */
+	private Config config;
+
+	/** 文件的配置方式 */
+	private ConfigFile configFile = new ConfigFile();
+
+	/** 方法注解缓存的配置 */
 	private Map<String, CacheConfig> caches;
 
 	public Config getConfig() {
@@ -48,5 +48,5 @@ public class RedissonProperties {
 	public void setCaches(Map<String, CacheConfig> caches) {
 		this.caches = caches;
 	}
-	
+
 }

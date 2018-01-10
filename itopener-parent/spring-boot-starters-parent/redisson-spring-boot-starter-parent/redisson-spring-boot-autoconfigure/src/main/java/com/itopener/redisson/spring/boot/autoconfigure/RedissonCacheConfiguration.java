@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 
-/**  
+/**
  * @author fuwei.deng
  * @date 2018年1月10日 下午3:05:52
  * @version 1.0.0
@@ -31,12 +31,12 @@ public class RedissonCacheConfiguration {
 	@ConditionalOnMissingBean(CacheManager.class)
 	public RedissonSpringCacheManager cacheManager(RedissonClient redissonClient) {
 		RedissonSpringCacheManager cacheManager = new RedissonSpringCacheManager(redissonClient);
-		
+
 		Map<String, CacheConfig> cacheConfigs = redissonProperties.getCaches();
 		if (!CollectionUtils.isEmpty(cacheConfigs)) {
 			cacheManager.setConfig(cacheConfigs);
 		}
-		
+
 		return cacheManager;
 	}
 }

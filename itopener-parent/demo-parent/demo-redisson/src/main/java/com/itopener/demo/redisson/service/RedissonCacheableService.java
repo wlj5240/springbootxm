@@ -17,7 +17,7 @@ public class RedissonCacheableService {
 	
 	private final Logger logger = LoggerFactory.getLogger(RedissonCacheableService.class);
 
-	@Cacheable(key = "'cache_user_id_' + #userVO.id", value = "userIdCache", cacheManager = "cacheManager")
+	@Cacheable(key = "'cache_user_id_' + #userVO.id", value = "userIdCache", cacheManager = "cacheManager", sync = true)
 	public UserVO get(UserVO userVO) {
 		logger.info("get from src");
 		return userVO;
