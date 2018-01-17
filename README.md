@@ -10,10 +10,13 @@
         - **elasticjob-spring-boot-starter-parent**：封装elasticjob的starter。主要配置zk、简单任务、流任务、开启数据库存储
         - **eureka-spring-boot-starter-parent**：封装eureka的starter，可通过http请求设置应用的状态，达到停用启用应用节点的目的
         - **hadoop-spring-boot-starter-parent**：封装hbase操作的starter，添加依赖后注入HbaseTemplate即可使用
-        - **lock-redis-spring-boot-starter-parent**：封装基于redis的分布式锁，可使用注解的方式。已解决极端情况下可能会出现锁不释放的问题
+        - **lock-redis-spring-boot-starter-parent**：封装基于redis的分布式锁，可使用注解的方式。已解决一些极端情况下可能会出现锁不释放的问题
+        - **lock-redisson-spring-boot-starter-parent**：封装redis分布式锁，基于redisson客户端工具包，使用注解的方式
         - **lock-zk-spring-boot-starter-parent**：封装基于zookeeper的分布式锁，可使用注解的方式
         - **ratelimiter-spring-boot-starter-parent**：封装基于guava RateLimiter的限流starter
+        - **redisson-spring-boot-starter-parent**：封装redis的redisson客户端工具包的starter，包含spring cache的整合
         - **tbschedule-spring-boot-starter-parent**：封装tbschedule的starter，在properties按照spring boot的格式配置zk即可
+        - **zk-spring-boot-starter-parent**：封装zookeeper客户端的starter，使用curator客户端工具包
         - **zuul-route-spring-boot-starter-parent**：封装zuul动态路由的starter，包含基于redis、db、zk的三种方式
     - **tools-parent**：自定义工具的根目录
         - **tools-eureka-admin-parent**：eureka的应用节点管理工具，配合eureka-spring-boot-starter-parent使用，可以动态停用启用应用节点
