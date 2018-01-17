@@ -23,4 +23,5 @@
         - **tools-generator**：基于mysql的自动生成model、mybatis mapper xml、dao的工具，用起来不是太方便，并且只适合特定的代码结构
         - **tools-log-appender-parent**：封装日志appender，目前只包含基于kafka的日志
         - **tools-redis-parent**：redis查看工具。可以查询redis集群信息、节点信息、连接终端等，也可以查询redis里的key，支持hash结构数据的查询
+        - **tools-zookeeper-parent**：zookeeper查看工具，可以对zookeeper里的数据进行增删改查
         - **tools-zuul-route-admin-parent**：zuul动态路由管理工具。配合zuul-route-spring-boot-starter-parent使用，可以动态配置路由规则，达到动态切流（分流）的效果
