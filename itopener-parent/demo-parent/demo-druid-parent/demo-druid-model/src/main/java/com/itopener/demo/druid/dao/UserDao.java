@@ -54,6 +54,10 @@ public class UserDao {
 	public int update(User user) {
 		return baseDao.update(NAMESPACE + "update", user);
 	}
+	
+	public int incr(User user) {
+		return baseDao.update(NAMESPACE + "incr", user);
+	}
 
 	public int delete(User user) {
 		return baseDao.update(NAMESPACE + "delete", user);

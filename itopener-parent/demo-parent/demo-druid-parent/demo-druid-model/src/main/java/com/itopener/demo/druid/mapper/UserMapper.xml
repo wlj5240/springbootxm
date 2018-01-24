@@ -62,6 +62,13 @@
 			and version = #{version,jdbcType=BIGINT}
 	</update>
 
+	<update id="incr" parameterType="com.itopener.demo.druid.model.User">
+		update t_user
+		set version = version - 1
+		where id = #{id,jdbcType=BIGINT}
+			and version > 0
+	</update>
+
 	<delete id="delete" parameterType="com.itopener.demo.druid.model.User">
 		delete from t_user
 		where id = #{id,jdbcType=BIGINT}

@@ -56,4 +56,12 @@ public class UserController {
 		userService.transaction(user);
 		return ResultMap.buildSuccess().put("user", user);
 	}
+	
+	@RequestMapping("incr/{id}")
+	public ResultMap incr(@PathVariable long id) {
+		User user = new User();
+		user.setId(id);
+		userService.incr(user);
+		return ResultMap.buildSuccess();
+	}
 }

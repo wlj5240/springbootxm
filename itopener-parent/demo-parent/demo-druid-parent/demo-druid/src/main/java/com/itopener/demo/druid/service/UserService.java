@@ -63,4 +63,14 @@ public class UserService {
 		userDao.update(user);
 		throw new BaseRuntimeException("抛出异常，让事务回滚");
 	}
+	
+	@Transactional
+	public void incr(User user) {
+		userDao.incr(user);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }
