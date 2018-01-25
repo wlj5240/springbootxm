@@ -46,5 +46,6 @@
     <module>demo-cache-redis-parent</module>
     <module>demo-redisson</module>
     <module>demo-lock-redisson</module>
+    <module>demo-sequence</module>
   </modules>
 </project>
