@@ -13,8 +13,9 @@
         - **lock-redis-spring-boot-starter-parent**：封装基于redis的分布式锁，可使用注解的方式。已解决一些极端情况下可能会出现锁不释放的问题
         - **lock-redisson-spring-boot-starter-parent**：封装redis分布式锁，基于redisson客户端工具包，使用注解的方式
         - **lock-zk-spring-boot-starter-parent**：封装基于zookeeper的分布式锁，可使用注解的方式
-        - **ratelimiter-spring-boot-starter-parent**：封装基于guava RateLimiter的限流starter
+        - **ratelimiter-spring-boot-starter-parent**：封装基于guava RateLimiter的限流starter，包含查看和修改限流值的endpoint
         - **redisson-spring-boot-starter-parent**：封装redis的redisson客户端工具包的starter，包含spring cache的整合
+        - **sequence-spring-boot-starter-parent**：封装分布式序列号的生成器，基于snowflake思想的实现，需要自定义实现IWorker的实现，以便获取应用节点的id
         - **tbschedule-spring-boot-starter-parent**：封装tbschedule的starter，在properties按照spring boot的格式配置zk即可
         - **zk-spring-boot-starter-parent**：封装zookeeper客户端的starter，使用curator客户端工具包
         - **zuul-route-spring-boot-starter-parent**：封装zuul动态路由的starter，包含基于redis、db、zk的三种方式
