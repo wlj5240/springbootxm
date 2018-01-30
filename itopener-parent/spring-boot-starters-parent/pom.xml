@@ -28,5 +28,6 @@
     <module>redisson-spring-boot-starter-parent</module>
     <module>lock-redisson-spring-boot-starter-parent</module>
     <module>sequence-spring-boot-starter-parent</module>
+    <module>cache-redis-caffeine-spring-boot-starter-parent</module>
   </modules>
 </project>
