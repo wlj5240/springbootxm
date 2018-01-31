@@ -190,10 +190,24 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		return cacheNameExpire == null ? expire : cacheNameExpire.longValue();
 	}
 	
+	/**
+	 * @description 缓存变更时通知其他节点清理本地缓存
+	 * @author fuwei.deng
+	 * @date 2018年1月31日 下午3:20:28
+	 * @version 1.0.0
+	 * @param message
+	 */
 	private void push(CacheMessage message) {
 		redisTemplate.convertAndSend(topic, message);
 	}
 	
+	/**
+	 * @description 清理本地缓存
+	 * @author fuwei.deng
+	 * @date 2018年1月31日 下午3:15:39
+	 * @version 1.0.0
+	 * @param key
+	 */
 	public void clearLocal(Object key) {
 		logger.debug("clear local cache, the key is : {}", key);
 		if(key == null) {

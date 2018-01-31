@@ -73,9 +73,6 @@ public class RedisCaffeineCacheManager implements CacheManager {
 		if(cacheRedisCaffeineProperties.getCaffeine().getMaximumSize() > 0) {
 			cacheBuilder.maximumSize(cacheRedisCaffeineProperties.getCaffeine().getMaximumSize());
 		}
-		if(cacheRedisCaffeineProperties.getCaffeine().getMaximumWeight() > 0) {
-			cacheBuilder.maximumWeight(cacheRedisCaffeineProperties.getCaffeine().getMaximumWeight());
-		}
 		if(cacheRedisCaffeineProperties.getCaffeine().getRefreshAfterWrite() > 0) {
 			cacheBuilder.refreshAfterWrite(cacheRedisCaffeineProperties.getCaffeine().getRefreshAfterWrite(), TimeUnit.MILLISECONDS);
 		}
