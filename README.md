@@ -5,6 +5,7 @@
     - **itopener-framework**：基础框架模块。用于定义一些通用的类，比如：登录拦截器、权限拦截器（具体逻辑由自己项目内实现）、http请求的返回对象等
     - **itopener-utils**：工具模块，一些公共的工具类。比如：时间操作、加密操作等
     - **spring-boot-starters-parent**：封装starter的根目录
+        - **cache-redis-caffeine-spring-boot-starter-parent**：spring boot + spring cache两级缓存的封装（redis + caffeine）
         - **druid-spring-boot-starter-parent**：封装druid的starter
         - **druidstat-spring-boot-starter-parent**：封装druid监控统计的starter
         - **elasticjob-spring-boot-starter-parent**：封装elasticjob的starter。主要配置zk、简单任务、流任务、开启数据库存储
