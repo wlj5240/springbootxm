@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>com.itopener</groupId>
@@ -36,17 +37,17 @@
 		<module>demo-jsonp-parent</module>
 		<module>demo-tbschedule</module>
 		<module>demo-session-parent</module>
-    <module>demo-zipkin-parent</module>
-    <module>demo-springcloud-config-parent</module>
-    <module>demo-springboot-test</module>
-    <module>demo-ratelimiter-parent</module>
-    <module>demo-shardingjdbc-parent</module>
-    <module>demo-amazeui</module>
-    <module>demo-layui</module>
-    <module>demo-cache-redis-parent</module>
-    <module>demo-redisson</module>
-    <module>demo-lock-redisson</module>
-    <module>demo-sequence</module>
-    <module>demo-cache-redis-caffeine</module>
-  </modules>
+		<module>demo-zipkin-parent</module>
+		<module>demo-springcloud-config-parent</module>
+		<module>demo-springboot-test</module>
+		<module>demo-ratelimiter-parent</module>
+		<module>demo-shardingjdbc-parent</module>
+		<module>demo-amazeui</module>
+		<module>demo-layui</module>
+		<module>demo-cache-redis</module>
+		<module>demo-redisson</module>
+		<module>demo-lock-redisson</module>
+		<module>demo-sequence</module>
+		<module>demo-cache-redis-caffeine</module>
+	</modules>
 </project>
