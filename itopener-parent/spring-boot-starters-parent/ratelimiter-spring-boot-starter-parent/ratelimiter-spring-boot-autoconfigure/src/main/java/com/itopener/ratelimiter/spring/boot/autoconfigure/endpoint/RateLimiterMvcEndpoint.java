@@ -19,7 +19,7 @@ public class RateLimiterMvcEndpoint extends EndpointMvcAdapter {
 		this.delegate = delegate;
 	}
 
-	@PutMapping("/{name:.*}")
+	@PutMapping("/limiter/{name:.*}")
 	@ResponseBody
 	@HypermediaDisabled
 	public Object set(@PathVariable String name, double rate) {
@@ -37,7 +37,7 @@ public class RateLimiterMvcEndpoint extends EndpointMvcAdapter {
 		}
 	}
 	
-	@GetMapping("/{name:.*}")
+	@GetMapping("/limiter/{name:.*}")
 	@ResponseBody
 	@HypermediaDisabled
 	public Object get(@PathVariable String name) {
