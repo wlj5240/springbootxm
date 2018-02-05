@@ -19,6 +19,7 @@
         - **sequence-spring-boot-starter-parent**：封装分布式序列号的生成器，基于snowflake思想的实现，需要自定义实现IWorker的实现，以便获取应用节点的id
         - **tbschedule-spring-boot-starter-parent**：封装tbschedule的starter，在properties按照spring boot的格式配置zk即可
         - **zk-spring-boot-starter-parent**：封装zookeeper客户端的starter，使用curator客户端工具包
+        - **zuul-ratelimiter-spring-boot-starter-parent**：spring cloud zuul网关路由限流配置
         - **zuul-route-spring-boot-starter-parent**：封装zuul动态路由的starter，包含基于redis、db、zk的三种方式
     - **tools-parent**：自定义工具的根目录
         - **tools-eureka-admin-parent**：eureka的应用节点管理工具，配合eureka-spring-boot-starter-parent使用，可以动态停用启用应用节点
