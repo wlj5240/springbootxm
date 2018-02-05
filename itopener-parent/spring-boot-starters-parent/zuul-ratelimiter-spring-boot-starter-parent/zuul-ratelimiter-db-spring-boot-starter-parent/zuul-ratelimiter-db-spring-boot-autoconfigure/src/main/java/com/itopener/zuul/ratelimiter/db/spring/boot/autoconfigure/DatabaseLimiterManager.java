@@ -39,22 +39,4 @@ public class DatabaseLimiterManager implements ILimiterManager {
 		return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(ZuulPathEntity.class));
 	}
 
-	@Override
-	public void set(ZuulIdEntity zuulIdEntity) {
-		String sql = "update zuul_id_limiter set permits_per_second = ?, permits = ?, timeout = ?, time_unit = ?, status_code = ?, error_cause = ?, `enable` = ? where id = ?";
-		jdbcTemplate.update(sql, zuulIdEntity.getPermitsPerSecond(), 
-				zuulIdEntity.getPermits(), zuulIdEntity.getTimeout(), zuulIdEntity.getTimeUnit(), 
-				zuulIdEntity.getStatusCode(), zuulIdEntity.getErrorCause(), zuulIdEntity.isEnable(), 
-				zuulIdEntity.getId());
-	}
-
-	@Override
-	public void set(ZuulPathEntity zuulPathEntity) {
-		String sql = "update zuul_path_limiter set permits_per_second = ?, permits = ?, timeout = ?, time_unit = ?, status_code = ?, error_cause = ?, `enable` = ? where zuul_id = ? and path = ?";
-		jdbcTemplate.update(sql, zuulPathEntity.getPermitsPerSecond(), zuulPathEntity.getPermits(), 
-				zuulPathEntity.getTimeout(), zuulPathEntity.getTimeUnit(), 
-				zuulPathEntity.getStatusCode(), zuulPathEntity.getErrorCause(), 
-				zuulPathEntity.isEnable(), zuulPathEntity.getZuulId(), zuulPathEntity.getPath());
-	}
-
 }

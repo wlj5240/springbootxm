@@ -117,9 +117,9 @@ public class RateLimiterHandler {
 		}
 	}
 	
-	private ZuulIdEntity trans(String id, Limiter limiter) {
+	private ZuulIdEntity trans(String zuulId, Limiter limiter) {
 		ZuulIdEntity zuulIdEntity = new ZuulIdEntity();
-		zuulIdEntity.setId(id);
+		zuulIdEntity.setZuulId(zuulId);
 		zuulIdEntity.setPermits(limiter.getPermits());
 		zuulIdEntity.setPermitsPerSecond(limiter.getPermitsPerSecond());
 		zuulIdEntity.setTimeout(limiter.getTimeout());
@@ -133,7 +133,7 @@ public class RateLimiterHandler {
 			return ;
 		}
 		for(ZuulIdEntity zuulIdEntity : zuulIdEntities) {
-			zuulIdRateLimiterMap.put(zuulIdEntity.getId(), zuulIdEntity);
+			zuulIdRateLimiterMap.put(zuulIdEntity.getZuulId(), zuulIdEntity);
 		}
 	}
 	
@@ -161,7 +161,7 @@ public class RateLimiterHandler {
 	}
 	
 	public void put(ZuulIdEntity zuulIdEntity) {
-		zuulIdRateLimiterMap.put(zuulIdEntity.getId(), zuulIdEntity);
+		zuulIdRateLimiterMap.put(zuulIdEntity.getZuulId(), zuulIdEntity);
 	}
 	
 	public void put(ZuulPathEntity zuulPathEntity) {

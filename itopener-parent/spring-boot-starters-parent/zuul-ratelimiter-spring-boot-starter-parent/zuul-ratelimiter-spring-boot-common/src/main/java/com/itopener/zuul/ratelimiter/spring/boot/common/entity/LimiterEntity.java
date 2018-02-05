@@ -14,6 +14,8 @@ public class LimiterEntity implements Serializable {
 
 	/** */
 	private static final long serialVersionUID = -2507493013440995379L;
+	
+	private long id;
 
 	/** 每秒限制数量*/
 	private double permitsPerSecond;
@@ -58,6 +60,14 @@ public class LimiterEntity implements Serializable {
 		}
 	}
 	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public double getPermitsPerSecond() {
 		return permitsPerSecond;
 	}

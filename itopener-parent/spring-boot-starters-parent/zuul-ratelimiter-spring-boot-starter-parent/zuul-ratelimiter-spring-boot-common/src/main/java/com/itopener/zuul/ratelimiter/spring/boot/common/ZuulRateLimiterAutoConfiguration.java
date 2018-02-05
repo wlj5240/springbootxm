@@ -9,11 +9,8 @@ import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulIdRateLimiterEndpoint;
-import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulIdRateLimiterMvcEndpoint;
-import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulPathRateLimiterEndpoint;
-import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulPathRateLimiterMvcEndpoint;
 import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulRateLimiterEndpoint;
+import com.itopener.zuul.ratelimiter.spring.boot.common.endpoint.ZuulRateLimiterMvcEndpoint;
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.ILimiterManager;
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.RateLimiterHandler;
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.ZuulRateLimiterErrorFilter;
@@ -53,33 +50,13 @@ public class ZuulRateLimiterAutoConfiguration {
 	
 	@Bean
 	@ConditionalOnMissingBean
-	@ConditionalOnBean(ILimiterManager.class)
-	public ZuulIdRateLimiterEndpoint zuulIdRateLimiterEndpoint(RateLimiterHandler rateLimiterHandler, ILimiterManager limiterManager) {
-		return new ZuulIdRateLimiterEndpoint(rateLimiterHandler, limiterManager);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public ZuulIdRateLimiterMvcEndpoint zuulIdRateLimiterMvcEndpoint(ZuulIdRateLimiterEndpoint zuulIdRateLimiterEndpoint) {
-		return new ZuulIdRateLimiterMvcEndpoint(zuulIdRateLimiterEndpoint);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	@ConditionalOnBean(ILimiterManager.class)
-	public ZuulPathRateLimiterEndpoint zuulPathRateLimiterEndpoint(RateLimiterHandler rateLimiterHandler, ILimiterManager limiterManager) {
-		return new ZuulPathRateLimiterEndpoint(rateLimiterHandler, limiterManager);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
-	public ZuulPathRateLimiterMvcEndpoint zuulPathRateLimiterMvcEndpoint(ZuulPathRateLimiterEndpoint zuulPathRateLimiterEndpoint) {
-		return new ZuulPathRateLimiterMvcEndpoint(zuulPathRateLimiterEndpoint);
-	}
-	
-	@Bean
-	@ConditionalOnMissingBean
 	public ZuulRateLimiterEndpoint zuulRateLimiterEndpoint(RateLimiterHandler rateLimiterHandler) {
 		return new ZuulRateLimiterEndpoint(rateLimiterHandler);
+	}
+	
+	@Bean
+	@ConditionalOnMissingBean
+	public ZuulRateLimiterMvcEndpoint zuulRateLimiterMvcEndpoint(ZuulRateLimiterEndpoint zuulRateLimiterEndpoint) {
+		return new ZuulRateLimiterMvcEndpoint(zuulRateLimiterEndpoint);
 	}
 }

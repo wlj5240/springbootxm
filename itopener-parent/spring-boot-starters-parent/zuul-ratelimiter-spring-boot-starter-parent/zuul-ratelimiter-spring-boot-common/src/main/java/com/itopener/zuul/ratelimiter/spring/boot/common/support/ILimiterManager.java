@@ -22,8 +22,6 @@ public interface ILimiterManager {
 	 */
 	List<ZuulIdEntity> getZuulIds();
 	
-	void set(ZuulIdEntity zuulIdEntity);
-	
 	/**
 	 * @description 根据zuul路由id获取path
 	 * @author fuwei.deng
@@ -32,6 +30,4 @@ public interface ILimiterManager {
 	 * @return
 	 */
 	List<ZuulPathEntity> getZuulPaths();
-	
-	void set(ZuulPathEntity zuulPathEntity);
 }

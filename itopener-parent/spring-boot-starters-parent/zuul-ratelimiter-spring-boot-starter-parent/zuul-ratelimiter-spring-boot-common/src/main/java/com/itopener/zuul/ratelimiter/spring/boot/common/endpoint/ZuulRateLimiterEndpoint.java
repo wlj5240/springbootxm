@@ -26,11 +26,14 @@ public class ZuulRateLimiterEndpoint extends AbstractEndpoint<Map<String, ?>> {
 
 	@Override
 	public Map<String, ?> invoke() {
-		rateLimiterHandler.generateRateLimiterMap();
+//		rateLimiterHandler.generateRateLimiterMap();
 		Map<String, Map<String, ?>> limiter = new HashMap<>();
 		limiter.put("zuulIdRateLimiter", rateLimiterHandler.getZuulIdRateLimiterMap());
 		limiter.put("zuulPathRateLimiter", rateLimiterHandler.getPathRateLimiterMap());
 		return limiter;
 	}
 	
+	public void refresh() {
+		rateLimiterHandler.generateRateLimiterMap();
+	}
 }

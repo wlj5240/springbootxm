@@ -12,14 +12,14 @@ public class ZuulIdEntity extends LimiterEntity {
 	private static final long serialVersionUID = 7026780267624790202L;
 	
 	/** zuul路由配置的id*/
-	private String id;
+	private String zuulId;
 
-	public String getId() {
-		return id;
+	public String getZuulId() {
+		return zuulId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setZuulId(String zuulId) {
+		this.zuulId = zuulId;
 	}
 	
 }
