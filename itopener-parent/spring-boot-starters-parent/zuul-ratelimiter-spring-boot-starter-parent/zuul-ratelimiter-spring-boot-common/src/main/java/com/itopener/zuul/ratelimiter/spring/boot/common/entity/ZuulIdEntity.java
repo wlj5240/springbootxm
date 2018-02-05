@@ -1,6 +1,7 @@
 package com.itopener.zuul.ratelimiter.spring.boot.common.entity;
 
-/**  
+/**
+ * @description 使用zuul id配置限流
  * @author fuwei.deng
  * @date 2018年2月1日 下午3:49:33
  * @version 1.0.0

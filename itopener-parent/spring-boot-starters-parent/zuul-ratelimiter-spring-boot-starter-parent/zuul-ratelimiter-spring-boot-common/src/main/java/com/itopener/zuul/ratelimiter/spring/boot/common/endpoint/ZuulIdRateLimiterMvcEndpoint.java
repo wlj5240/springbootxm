@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.LimiterEntity;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.ZuulIdEntity;
 
+/**
+ * @description 使用zuul id配置限流的endpoint，支持获取和更新限流配置
+ * @author fuwei.deng
+ * @date 2018年2月5日 上午9:46:23
+ * @version 1.0.0
+ */
 @ConfigurationProperties(prefix = "endpoints.zuul.limiter.id")
 public class ZuulIdRateLimiterMvcEndpoint extends EndpointMvcAdapter {
 	

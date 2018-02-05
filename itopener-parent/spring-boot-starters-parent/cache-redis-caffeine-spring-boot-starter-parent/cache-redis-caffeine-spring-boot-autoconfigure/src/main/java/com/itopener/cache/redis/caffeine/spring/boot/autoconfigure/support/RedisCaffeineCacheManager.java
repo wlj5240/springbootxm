@@ -28,17 +28,17 @@ public class RedisCaffeineCacheManager implements CacheManager {
 	
 	private CacheRedisCaffeineProperties cacheRedisCaffeineProperties;
 	
-	private RedisTemplate<Object, Object> redisTemplate;
+	private RedisTemplate<Object, Object> stringKeyRedisTemplate;
 
 	private boolean dynamic = true;
 
 	private Set<String> cacheNames;
 
 	public RedisCaffeineCacheManager(CacheRedisCaffeineProperties cacheRedisCaffeineProperties,
-			RedisTemplate<Object, Object> redisTemplate) {
+			RedisTemplate<Object, Object> stringKeyRedisTemplate) {
 		super();
 		this.cacheRedisCaffeineProperties = cacheRedisCaffeineProperties;
-		this.redisTemplate = redisTemplate;
+		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
 		this.dynamic = cacheRedisCaffeineProperties.isDynamic();
 		this.cacheNames = cacheRedisCaffeineProperties.getCacheNames();
 	}
@@ -53,7 +53,7 @@ public class RedisCaffeineCacheManager implements CacheManager {
 			return cache;
 		}
 		
-		cache = new RedisCaffeineCache(name, redisTemplate, caffeineCache(), cacheRedisCaffeineProperties);
+		cache = new RedisCaffeineCache(name, stringKeyRedisTemplate, caffeineCache(), cacheRedisCaffeineProperties);
 		Cache oldCache = cacheMap.putIfAbsent(name, cache);
 		logger.debug("create cache instance, the cache name is : {}", name);
 		return oldCache == null ? cache : oldCache;

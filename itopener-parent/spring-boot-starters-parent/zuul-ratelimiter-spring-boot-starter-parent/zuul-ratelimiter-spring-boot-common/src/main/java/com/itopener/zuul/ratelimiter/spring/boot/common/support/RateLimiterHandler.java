@@ -17,6 +17,12 @@ import com.itopener.zuul.ratelimiter.spring.boot.common.entity.LimiterEntity;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.ZuulIdEntity;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.ZuulPathEntity;
 
+/**
+ * @description 限流处理核心类
+ * @author fuwei.deng
+ * @date 2018年2月5日 上午9:51:01
+ * @version 1.0.0
+ */
 public class RateLimiterHandler {
 	
 	private final Logger logger = LoggerFactory.getLogger(RateLimiterHandler.class);
@@ -62,6 +68,14 @@ public class RateLimiterHandler {
 		throw new OverRateLimitException(limiter.getStatusCode(), limiter.getErrorCause(), limiter);
 	}
 	
+	/**
+	 * @description 获取限流配置
+	 * @author fuwei.deng
+	 * @date 2018年2月5日 上午9:24:16
+	 * @version 1.0.0
+	 * @param route
+	 * @return
+	 */
 	private LimiterEntity getLimiterEntity(Route route) {
 		LimiterEntity limiter = null;
 		Map<String, LimiterEntity> zuulIdPathRateLimiterMap =  pathRateLimiterMap.get(route.getId());
@@ -74,6 +88,12 @@ public class RateLimiterHandler {
 		return limiter;
 	}
 	
+	/**
+	 * @description 根据配置生成限流配置的map
+	 * @author fuwei.deng
+	 * @date 2018年2月5日 上午9:24:27
+	 * @version 1.0.0
+	 */
 	public void generateRateLimiterMap() {
 		zuulIdRateLimiterMap.clear();
 		pathRateLimiterMap.clear();

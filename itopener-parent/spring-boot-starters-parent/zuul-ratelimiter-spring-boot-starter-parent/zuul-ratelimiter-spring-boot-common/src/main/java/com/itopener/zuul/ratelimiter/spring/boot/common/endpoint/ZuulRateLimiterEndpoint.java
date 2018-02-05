@@ -8,6 +8,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.RateLimiterHandler;
 
+/**
+ * @description 刷新zuul限流配置，并返回最新的限流配置
+ * @author fuwei.deng
+ * @date 2018年2月5日 上午9:48:11
+ * @version 1.0.0
+ */
 @ConfigurationProperties(prefix = "endpoints.zuul.limiter")
 public class ZuulRateLimiterEndpoint extends AbstractEndpoint<Map<String, ?>> {
 	

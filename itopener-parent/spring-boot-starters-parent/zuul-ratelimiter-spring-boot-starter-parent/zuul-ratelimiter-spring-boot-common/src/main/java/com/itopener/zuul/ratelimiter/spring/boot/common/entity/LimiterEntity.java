@@ -4,7 +4,8 @@ import java.io.Serializable;
 
 import com.google.common.util.concurrent.RateLimiter;
 
-/**  
+/**
+ * @description 限流配置公共属性类
  * @author fuwei.deng
  * @date 2018年2月1日 下午3:51:57
  * @version 1.0.0

@@ -27,7 +27,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 
 	private String name;
 	
-	private RedisTemplate<Object, Object> redisTemplate;
+	private RedisTemplate<Object, Object> stringKeyRedisTemplate;
 
 	private Cache<Object, Object> caffeineCache;
 
@@ -43,11 +43,11 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		super(allowNullValues);
 	}
 	
-	public RedisCaffeineCache(String name, RedisTemplate<Object, Object> redisTemplate,
+	public RedisCaffeineCache(String name, RedisTemplate<Object, Object> stringKeyRedisTemplate,
 			Cache<Object, Object> caffeineCache, CacheRedisCaffeineProperties cacheRedisCaffeineProperties) {
 		super(cacheRedisCaffeineProperties.isCacheNullValues());
 		this.name = name;
-		this.redisTemplate = redisTemplate;
+		this.stringKeyRedisTemplate = stringKeyRedisTemplate;
 		this.caffeineCache = caffeineCache;
 		this.cachePrefix = cacheRedisCaffeineProperties.getCachePrefix();
 		this.defaultExpiration = cacheRedisCaffeineProperties.getRedis().getDefaultExpiration();
@@ -106,9 +106,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
         }
 		long expire = getExpire();
 		if(expire > 0) {
-			redisTemplate.opsForValue().set(getKey(key), toStoreValue(value), expire, TimeUnit.MILLISECONDS);
+			stringKeyRedisTemplate.opsForValue().set(getKey(key), toStoreValue(value), expire, TimeUnit.MILLISECONDS);
 		} else {
-			redisTemplate.opsForValue().set(getKey(key), toStoreValue(value));
+			stringKeyRedisTemplate.opsForValue().set(getKey(key), toStoreValue(value));
 		}
 		
 		push(new CacheMessage(this.name, key));
@@ -122,13 +122,13 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 		Object prevValue = null;
 		// 考虑使用分布式锁，或者将redis的setIfAbsent改为原子性操作
 		synchronized (key) {
-			prevValue = redisTemplate.opsForValue().get(cacheKey);
+			prevValue = stringKeyRedisTemplate.opsForValue().get(cacheKey);
 			if(prevValue == null) {
 				long expire = getExpire();
 				if(expire > 0) {
-					redisTemplate.opsForValue().set(getKey(key), toStoreValue(value), expire, TimeUnit.MILLISECONDS);
+					stringKeyRedisTemplate.opsForValue().set(getKey(key), toStoreValue(value), expire, TimeUnit.MILLISECONDS);
 				} else {
-					redisTemplate.opsForValue().set(getKey(key), toStoreValue(value));
+					stringKeyRedisTemplate.opsForValue().set(getKey(key), toStoreValue(value));
 				}
 				
 				push(new CacheMessage(this.name, key));
@@ -142,7 +142,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	@Override
 	public void evict(Object key) {
 		// 先清除redis中缓存数据，然后清除caffeine中的缓存，避免短时间内如果先清除caffeine缓存后其他请求会再从redis里加载到caffeine中
-		redisTemplate.delete(getKey(key));
+		stringKeyRedisTemplate.delete(getKey(key));
 		
 		push(new CacheMessage(this.name, key));
 		
@@ -152,9 +152,9 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	@Override
 	public void clear() {
 		// 先清除redis中缓存数据，然后清除caffeine中的缓存，避免短时间内如果先清除caffeine缓存后其他请求会再从redis里加载到caffeine中
-		Set<Object> keys = redisTemplate.keys(this.name.concat(":"));
+		Set<Object> keys = stringKeyRedisTemplate.keys(this.name.concat(":*"));
 		for(Object key : keys) {
-			redisTemplate.delete(key);
+			stringKeyRedisTemplate.delete(key);
 		}
 		
 		push(new CacheMessage(this.name, null));
@@ -171,7 +171,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 			return value;
 		}
 		
-		value = redisTemplate.opsForValue().get(cacheKey);
+		value = stringKeyRedisTemplate.opsForValue().get(cacheKey);
 		
 		if(value != null) {
 			logger.debug("get cache from redis and put in caffeine, the key is : {}", cacheKey);
@@ -198,7 +198,7 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	 * @param message
 	 */
 	private void push(CacheMessage message) {
-		redisTemplate.convertAndSend(topic, message);
+		stringKeyRedisTemplate.convertAndSend(topic, message);
 	}
 	
 	/**

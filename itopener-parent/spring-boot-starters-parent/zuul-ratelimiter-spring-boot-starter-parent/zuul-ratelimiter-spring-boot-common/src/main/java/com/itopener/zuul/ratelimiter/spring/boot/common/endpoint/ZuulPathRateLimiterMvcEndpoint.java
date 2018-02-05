@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.LimiterEntity;
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.ZuulPathEntity;
 
+/**
+ * @description 使用path配置限流的endpoint，支持获取和更新限流配置
+ * @author fuwei.deng
+ * @date 2018年2月5日 上午9:47:46
+ * @version 1.0.0
+ */
 @ConfigurationProperties(prefix = "endpoints.zuul.limiter.path")
 public class ZuulPathRateLimiterMvcEndpoint extends EndpointMvcAdapter {
 	

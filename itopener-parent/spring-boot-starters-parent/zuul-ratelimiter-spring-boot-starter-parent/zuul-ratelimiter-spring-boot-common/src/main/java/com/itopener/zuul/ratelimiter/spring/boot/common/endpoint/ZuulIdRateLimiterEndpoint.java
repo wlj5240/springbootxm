@@ -10,6 +10,12 @@ import com.itopener.zuul.ratelimiter.spring.boot.common.entity.ZuulIdEntity;
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.ILimiterManager;
 import com.itopener.zuul.ratelimiter.spring.boot.common.support.RateLimiterHandler;
 
+/**
+ * @description 使用zuul id配置限流的endpoint
+ * @author fuwei.deng
+ * @date 2018年2月5日 上午9:45:37
+ * @version 1.0.0
+ */
 @ConfigurationProperties(prefix = "endpoints.zuul.limiter.id")
 public class ZuulIdRateLimiterEndpoint extends AbstractEndpoint<Map<String, LimiterEntity>> {
 	

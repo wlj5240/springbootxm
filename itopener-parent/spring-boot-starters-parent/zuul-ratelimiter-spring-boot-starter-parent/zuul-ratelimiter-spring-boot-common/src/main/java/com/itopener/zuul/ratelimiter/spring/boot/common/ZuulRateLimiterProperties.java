@@ -16,12 +16,16 @@ import com.google.common.util.concurrent.RateLimiter;
 @ConfigurationProperties(prefix="spring.zuul.ratelimiter")
 public class ZuulRateLimiterProperties {
 
+	/** 执行限流逻辑的总开关*/
 	private boolean limiterSwitch = true;
 	
-	/** 超过限流配置后跳转的路径，可以自定义此路径的controller对返回数据统一处理*/
+	/** 超过限流配置后forward的路径，可以自定义此路径的controller对返回数据统一处理*/
 	private String overLimitPath;
 	
-	/** 通过serviceId配置的限流。由于path可能存在一些特殊字符，properties配置的方式无法兼容，所以暂不支持properties配置到path级别的限流*/
+	/** 通过serviceId配置的限流。
+	 * 由于path可能存在一些特殊字符，properties配置的方式无法兼容，所以暂不支持properties配置到path级别的限流
+	 * 此处配置是properties中的配置，如果持久化配置了相同的限流配置，优先使用持久化的配置
+	 * */
 	private Map<String, Limiter> service = new HashMap<String, Limiter>();
 	
 	public class Limiter {

@@ -13,7 +13,8 @@ import com.itopener.zuul.ratelimiter.spring.boot.common.ZuulRateLimiterPropertie
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
-/**  
+/**
+ * @description zuul限流处理filter
  * @author fuwei.deng
  * @date 2018年2月1日 下午2:16:52
  * @version 1.0.0
@@ -45,6 +46,7 @@ public class ZuulRateLimiterFilter extends ZuulFilter {
 
 	@Override
 	public boolean shouldFilter() {
+		// 根据限流的总开关来决定是否需要执行限流的逻辑
 		return zuulRateLimiterProperties.isLimiterSwitch();
 	}
 
@@ -54,6 +56,8 @@ public class ZuulRateLimiterFilter extends ZuulFilter {
 		final String requestURI = this.urlPathHelper.getPathWithinApplication(ctx.getRequest());
 		Route route = this.routeLocator.getMatchingRoute(requestURI);
 		logger.debug("ZuulRateLimiterFilter:{}", JSON.toJSONString(route));
+		// RateLimiter限流判断，由于zuul中的filter.run()方法的返回值暂无用处，所以此处不需要返回值
+		// 如果超过限流配置，直接抛出异常（zuul是根据是否抛出异常来决定是否执行下一个filter）
 		rateLimiterHandler.tryAcquire(route);
 		return null;
 	}

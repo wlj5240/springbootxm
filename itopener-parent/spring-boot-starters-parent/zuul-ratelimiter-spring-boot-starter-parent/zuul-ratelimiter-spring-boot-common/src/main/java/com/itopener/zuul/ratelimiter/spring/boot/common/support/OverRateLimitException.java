@@ -2,7 +2,8 @@ package com.itopener.zuul.ratelimiter.spring.boot.common.support;
 
 import com.itopener.zuul.ratelimiter.spring.boot.common.entity.LimiterEntity;
 
-/**  
+/**
+ * @description 超过限流时抛出的异常，自定义异常方便filter中处理
  * @author fuwei.deng
  * @date 2018年2月2日 下午3:33:33
  * @version 1.0.0
