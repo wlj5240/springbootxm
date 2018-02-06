@@ -49,5 +49,6 @@
 		<module>demo-lock-redisson</module>
 		<module>demo-sequence</module>
 		<module>demo-cache-redis-caffeine</module>
+		<module>demo-stock</module>
 	</modules>
 </project>
