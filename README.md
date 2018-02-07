@@ -3,6 +3,9 @@
 - **itopener-parent**：代码根目录，pom里统一定义所有module用到的jar包的版本（具体依赖哪些jar包由module自己定义，根pom只定义版本）
     - **demo-parent**：spring boot和spring cloud一些功能的示例代码；以及自己封装的spring boot starter和工具的使用示例
     - **itopener-framework**：基础框架模块。用于定义一些通用的类，比如：登录拦截器、权限拦截器（具体逻辑由自己项目内实现）、http请求的返回对象等
+    - **itopener-static-parent**：前端静态资源模块
+        - **itopener-amazeui**：amazeui前端静态资源，修改了一些间距和字体等样式，使页面更紧凑一些
+        - **itopener-layui**：layui前端静态资源
     - **itopener-utils**：工具模块，一些公共的工具类。比如：时间操作、加密操作等
     - **spring-boot-starters-parent**：封装starter的根目录
         - **cache-redis-caffeine-spring-boot-starter-parent**：spring boot + spring cache两级缓存的封装（redis + caffeine）
@@ -17,6 +20,7 @@
         - **ratelimiter-spring-boot-starter-parent**：封装基于guava RateLimiter的限流starter，包含查看和修改限流值的endpoint
         - **redisson-spring-boot-starter-parent**：封装redis的redisson客户端工具包的starter，包含spring cache的整合
         - **sequence-spring-boot-starter-parent**：封装分布式序列号的生成器，基于snowflake思想的实现，需要自定义实现IWorker的实现，以便获取应用节点的id
+        - **stock-spring-boot-starter-parent**：库存扣减的starter
         - **tbschedule-spring-boot-starter-parent**：封装tbschedule的starter，在properties按照spring boot的格式配置zk即可
         - **zk-spring-boot-starter-parent**：封装zookeeper客户端的starter，使用curator客户端工具包
         - **zuul-ratelimiter-spring-boot-starter-parent**：spring cloud zuul网关路由限流配置
