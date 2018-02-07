@@ -45,19 +45,15 @@ public class Stock {
 		 * @desc 扣减库存Lua脚本
 		 * @params 库存key
 		 * @return
-		 * 		-2：库存不足
-		 * 		-1:库存不限
-		 * 		-3:库存未初始化
+		 * 		StockCodeEnum
 		 * 		其他:剩余库存（扣减之后剩余的库存）
-		 * 
-		 * 返回结果>-2表示扣减库存成功
 		 */
 		StringBuilder sb = new StringBuilder();
         sb.append("if (redis.call('exists', KEYS[1]) == 1) then");
         sb.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
         // 不限库存
-        sb.append("    if (stock == -1) then");
-        sb.append("        return -1;");
+        sb.append("    if (stock == " + StockCodeEnum.NOT_LIMITED.getCode() + ") then");
+        sb.append("        return " + StockCodeEnum.NOT_LIMITED.getCode() + ";");
         sb.append("    end;");
         // 如果库存足够，执行减库存操作并返回减之后的库存
         sb.append("    local deductStock = tonumber(ARGV[1]);");
@@ -66,10 +62,10 @@ public class Stock {
         sb.append("        return stock - deductStock;");
         sb.append("    end;");
         // 库存不足
-        sb.append("    return -2;");
+        sb.append("    return " + StockCodeEnum.NOT_ENOUGH.getCode() + ";");
         sb.append("end;");
         // 库存未初始化
-        sb.append("return -3;");
+        sb.append("return " + StockCodeEnum.NOT_INIT.getCode() + ";");
         DEDUCT_STOCK_LUA = sb.toString();
 	}
 	
@@ -78,18 +74,15 @@ public class Stock {
 		 * @desc 恢复库存Lua脚本
 		 * @params 库存key
 		 * @return
-		 * 		-1:库存不限
-		 * 		-3:库存未初始化
+		 * 		StockCodeEnum
 		 * 		其他:剩余库存（恢复之后剩余的库存）
-		 * 
-		 * 返回结果>-2表示恢复库存成功
 		 */
 		StringBuilder sb = new StringBuilder();
 		sb.append("if (redis.call('exists', KEYS[1]) == 1) then");
 		sb.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
 		// 不限库存
-		sb.append("    if (stock == -1) then");
-		sb.append("        return -1;");
+		sb.append("    if (stock == " + StockCodeEnum.NOT_LIMITED.getCode() + ") then");
+		sb.append("        return " + StockCodeEnum.NOT_LIMITED.getCode() + ";");
 		sb.append("    end;");
 		// 恢复库存
 		sb.append("    local restoreStock = tonumber(ARGV[1]);");
@@ -97,7 +90,7 @@ public class Stock {
 		sb.append("    return stock + restoreStock;");
 		sb.append("end;");
 		// 库存未初始化
-		sb.append("return -3;");
+		sb.append("return " + StockCodeEnum.NOT_INIT.getCode() + ";");
 		RESTORE_STOCK_LUA = sb.toString();
 	}
 
@@ -122,21 +115,18 @@ public class Stock {
 	 * @param expire 库存过期时间
 	 * @param stockCallback 当库存未初始化时获取库存的方法
 	 * @return
-	 * 		-2：库存不足
-	 * 		-1:库存不限
-	 * 		-4:库存初始化失败
-	 * 		>-2:扣减库存成功
+	 * 		StockCodeEnum
 	 * 		其他:剩余库存（扣减之后剩余的库存）
 	 */
 	public long deduct(String key, long deductStock, long expire, IStockCallback stockCallback) {
 		long stock = deduct(key, deductStock);
-		if(stock == -3) {
+		if(stock == StockCodeEnum.NOT_INIT.getCode()) {
 			try {
 				// 分布式锁的key不能与库存的key相同，否则加锁的时候会把库存的值替换掉，导致脚本获取到的值类型不匹配
 				if(lock(lockKey(key), expire)) {
 					// 双重验证，避免并发时重复回源到数据库
 					stock = deduct(key, deductStock);
-					if(stock == -3) {
+					if(stock == StockCodeEnum.NOT_INIT.getCode()) {
 						final long srcStock = stockCallback.getStock(key);
 						
 						String result = redisTemplate.execute(new RedisCallback<String>() {
@@ -147,7 +137,7 @@ public class Stock {
 							}
 						});
 						
-						return !StringUtils.isEmpty(result) ? deduct(key, deductStock) : -4;
+						return !StringUtils.isEmpty(result) ? deduct(key, deductStock) : StockCodeEnum.INIT_FAILED.getCode();
 					}
 				}
 			} finally {
@@ -185,7 +175,7 @@ public class Stock {
 				else if (nativeConnection instanceof Jedis) {
 					return (Long) ((Jedis) nativeConnection).eval(DEDUCT_STOCK_LUA, keys, args);
 				}
-				return -1L;
+				return (long) StockCodeEnum.INIT_FAILED.getCode();
 			}
 		});
 		return result;
@@ -201,20 +191,18 @@ public class Stock {
 	 * @param expire 库存过期时间
 	 * @param stockCallback 当库存未初始化时获取库存的方法
 	 * @return
-	 * 		-1:库存不限
-	 * 		-4:库存初始化失败
-	 * 		>-2:恢复库存成功
+	 * 		StockCodeEnum
 	 * 		其他:剩余库存（恢复之后剩余的库存）
 	 */
 	public long restore(String key, long restoreStock, long expire, IStockCallback stockCallback) {
 		long stock = restore(key, restoreStock);
-		if(stock == -3) {
+		if(stock == StockCodeEnum.NOT_INIT.getCode()) {
 			try {
 				// 分布式锁的key不能与库存的key相同，否则加锁的时候会把库存的值替换掉，导致脚本获取到的值类型不匹配
 				if(lock(lockKey(key), expire)) {
 					// 双重验证，避免并发时重复回源到数据库
 					stock = restore(key, restoreStock);
-					if(stock == -3) {
+					if(stock == StockCodeEnum.NOT_INIT.getCode()) {
 						final long srcStock = stockCallback.getStock(key);
 						
 						String result = redisTemplate.execute(new RedisCallback<String>() {
@@ -225,7 +213,7 @@ public class Stock {
 							}
 						});
 						
-						return !StringUtils.isEmpty(result) ? restore(key, restoreStock) : -4;
+						return !StringUtils.isEmpty(result) ? restore(key, restoreStock) : StockCodeEnum.INIT_FAILED.getCode();
 					}
 				}
 			} finally {
@@ -263,10 +251,44 @@ public class Stock {
 				else if (nativeConnection instanceof Jedis) {
 					return (Long) ((Jedis) nativeConnection).eval(RESTORE_STOCK_LUA, keys, args);
 				}
-				return -1L;
+				return (long) StockCodeEnum.INIT_FAILED.getCode();
 			}
 		});
 		return result;
+	}
+	
+	/**
+	 * @description 加载库存
+	 * @author fuwei.deng
+	 * @date 2018年2月7日 下午3:52:18
+	 * @version 1.0.0
+	 * @param key 库存key
+	 * @param expire 过期时间，单位毫秒
+	 * @param stockCallback 库存未初始化时的回调查询
+	 * @return
+	 * 		StockCodeEnum
+	 */
+	public long load(String key, long expire, IStockCallback stockCallback) {
+		try {
+			if(lock(lockKey(key), expire)) {
+				if(redisTemplate.hasKey(key)) {
+					return (long) redisTemplate.opsForValue().get(key);
+				}
+				final long srcStock = stockCallback.getStock(key);
+				String result = redisTemplate.execute(new RedisCallback<String>() {
+					@Override
+					public String doInRedis(RedisConnection connection) throws DataAccessException {
+						JedisCommands commands = (JedisCommands) connection.getNativeConnection();
+						return commands.set(key, String.valueOf(srcStock), "NX", "PX", expire);
+					}
+				});
+				
+				return !StringUtils.isEmpty(result) ? srcStock : StockCodeEnum.INIT_FAILED.getCode();
+			}
+			return StockCodeEnum.INIT_FAILED.getCode();
+		} finally {
+			releaseLock(lockKey(key));
+		}
 	}
 	
 	/**
