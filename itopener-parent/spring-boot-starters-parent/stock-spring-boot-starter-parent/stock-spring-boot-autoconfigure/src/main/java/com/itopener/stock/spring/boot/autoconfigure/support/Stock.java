@@ -3,6 +3,7 @@ package com.itopener.stock.spring.boot.autoconfigure.support;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -271,10 +272,11 @@ public class Stock {
 	public long load(String key, long expire, IStockCallback stockCallback) {
 		try {
 			if(lock(lockKey(key), expire)) {
-				if(redisTemplate.hasKey(key)) {
-					return (long) redisTemplate.opsForValue().get(key);
-				}
 				final long srcStock = stockCallback.getStock(key);
+				if(redisTemplate.hasKey(key)) {
+					redisTemplate.opsForValue().set(key, srcStock, expire, TimeUnit.MILLISECONDS);
+					return srcStock;
+				}
 				String result = redisTemplate.execute(new RedisCallback<String>() {
 					@Override
 					public String doInRedis(RedisConnection connection) throws DataAccessException {
