@@ -24,7 +24,7 @@ public class StockContrtoller {
 	
 	@GetMapping("deduct/{key}/{deduct}")
 	public ResultMap deduct(@PathVariable String key, @PathVariable long deduct){
-		long result = stock.stock(key, deduct, 60000, new IStockCallback() {
+		long result = stock.deduct(key, deduct, 60000, new IStockCallback() {
 			@Override
 			public long getStock(String key) {
 				logger.info("get stock:{}", key);
@@ -33,6 +33,20 @@ public class StockContrtoller {
 		});
 		
 		logger.info("deduct result : {}", result > -2);
+		return ResultMap.buildSuccess().put("stock", result);
+	}
+	
+	@GetMapping("restore/{key}/{restore}")
+	public ResultMap restore(@PathVariable String key, @PathVariable long restore){
+		long result = stock.restore(key, restore, 60000, new IStockCallback() {
+			@Override
+			public long getStock(String key) {
+				logger.info("get stock:{}", key);
+				return 50;
+			}
+		});
+		
+		logger.info("restore result : {}", result > -2);
 		return ResultMap.buildSuccess().put("stock", result);
 	}
 	
