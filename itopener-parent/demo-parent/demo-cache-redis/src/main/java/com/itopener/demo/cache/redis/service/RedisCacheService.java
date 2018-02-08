@@ -18,11 +18,12 @@ public class RedisCacheService {
 	@Cacheable(key = "'cache_user_id_' + #id", value = "userIdCache", cacheManager = "cacheManager")
 	public UserVO get(long id) {
 		logger.info("get by id from db");
-		UserVO user = new UserVO();
-		user.setId(id);
-		user.setName("name" + id);
-		user.setCreateTime(TimestampUtil.current());
-		return user;
+		return null;
+//		UserVO user = new UserVO();
+//		user.setId(id);
+//		user.setName("name" + id);
+//		user.setCreateTime(TimestampUtil.current());
+//		return user;
 	}
 	
 	@Cacheable(key = "'cache_user_name_' + #name", value = "userNameCache", cacheManager = "cacheManager")
