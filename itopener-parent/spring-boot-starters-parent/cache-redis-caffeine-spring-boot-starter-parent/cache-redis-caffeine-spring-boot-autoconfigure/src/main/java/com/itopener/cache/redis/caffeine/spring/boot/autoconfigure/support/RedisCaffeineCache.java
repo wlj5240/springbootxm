@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,17 +72,17 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 			return (T) value;
 		}
 		
-		ReentrantLock lock = new ReentrantLock();
 		try {
-			lock.lock();
-			value = lookup(key);
-			if(value != null) {
+			synchronized (key) {
+				value = lookup(key);
+				if(value != null) {
+					return (T) value;
+				}
+				value = valueLoader.call();
+				Object storeValue = toStoreValue(value);
+				put(key, storeValue);
 				return (T) value;
 			}
-			value = valueLoader.call();
-			Object storeValue = toStoreValue(valueLoader.call());
-			put(key, storeValue);
-			return (T) value;
 		} catch (Exception e) {
 			try {
                 Class<?> c = Class.forName("org.springframework.cache.Cache$ValueRetrievalException");
@@ -93,8 +92,6 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
             } catch (Exception e1) {
                 throw new IllegalStateException(e1);
             }
-		} finally {
-			lock.unlock();
 		}
 	}
 

@@ -12,6 +12,15 @@ public class HystrtixService {
 	
 	private final Logger logger = LoggerFactory.getLogger(HystrtixService.class);
 
+	/**
+	 * @description HystrixCommand注解默认超时时间是1s
+	 * 		HystrixCommand注解配置属性参见 {@code HystrixCommandProperties}
+	 * @author fuwei.deng
+	 * @date 2018年2月8日 下午5:02:22
+	 * @version 1.0.0
+	 * @param id
+	 * @return
+	 */
 	@HystrixCommand(fallbackMethod = "callFallback")
 	public ResultMap call(long id){
 		try {
