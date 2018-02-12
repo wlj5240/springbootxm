@@ -3,6 +3,7 @@ package com.itopener.demo.rabbitmq.producer.controller;
 import javax.annotation.Resource;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.support.CorrelationData;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,9 @@ public class RabbitController {
 //		prop.setMessageId("12345");
 //		Message message = new Message(JSON.toJSONString(user).getBytes(), prop);
 //		amqpTemplate.send(NormalConstant.EXCHANGE_ACTIVITY, NormalConstant.ROUTINGKEY_ACTIVITY, message);
-		rabbitTemplate.convertAndSend(RabbitMQProducerConstant.EXCHANGE_ITOPENER, RabbitMQProducerConstant.ROUTINGKEY_ITOPENER, user);
+//		rabbitTemplate.convertAndSend(RabbitMQProducerConstant.EXCHANGE_ITOPENER, RabbitMQProducerConstant.ROUTINGKEY_ITOPENER, user);
+		rabbitTemplate.convertAndSend(RabbitMQProducerConstant.EXCHANGE_ITOPENER, 
+				RabbitMQProducerConstant.ROUTINGKEY_ITOPENER, user, new CorrelationData(String.valueOf(user.getId())));
 		return ResultMap.buildSuccess();
 	}
 	
