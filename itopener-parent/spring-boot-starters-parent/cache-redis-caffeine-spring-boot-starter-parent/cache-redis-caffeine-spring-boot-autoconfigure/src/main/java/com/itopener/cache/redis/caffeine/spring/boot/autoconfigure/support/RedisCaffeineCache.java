@@ -1,10 +1,11 @@
 package com.itopener.cache.redis.caffeine.spring.boot.autoconfigure.support;
 
-import java.lang.reflect.Constructor;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,8 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 	private Map<String, Long> expires;
 	
 	private String topic = "cache:redis:caffeine:topic";
+	
+	private Map<String, ReentrantLock> keyLockMap = new ConcurrentHashMap<String, ReentrantLock>();
 	
 	protected RedisCaffeineCache(boolean allowNullValues) {
 		super(allowNullValues);
@@ -72,26 +75,26 @@ public class RedisCaffeineCache extends AbstractValueAdaptingCache {
 			return (T) value;
 		}
 		
+		ReentrantLock lock = keyLockMap.get(key.toString());
+		if(lock == null) {
+			logger.debug("create lock for key : {}", key);
+			lock = new ReentrantLock();
+			keyLockMap.putIfAbsent(key.toString(), lock);
+		}
 		try {
-			synchronized (key) {
-				value = lookup(key);
-				if(value != null) {
-					return (T) value;
-				}
-				value = valueLoader.call();
-				Object storeValue = toStoreValue(value);
-				put(key, storeValue);
+			lock.lock();
+			value = lookup(key);
+			if(value != null) {
 				return (T) value;
 			}
+			value = valueLoader.call();
+			Object storeValue = toStoreValue(value);
+			put(key, storeValue);
+			return (T) value;
 		} catch (Exception e) {
-			try {
-                Class<?> c = Class.forName("org.springframework.cache.Cache$ValueRetrievalException");
-                Constructor<?> constructor = c.getConstructor(Object.class, Callable.class, Throwable.class);
-                RuntimeException exception = (RuntimeException) constructor.newInstance(key, valueLoader, e.getCause());
-                throw exception;                
-            } catch (Exception e1) {
-                throw new IllegalStateException(e1);
-            }
+			throw new ValueRetrievalException(key, valueLoader, e.getCause());
+		} finally {
+			lock.unlock();
 		}
 	}
 

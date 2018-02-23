@@ -17,7 +17,7 @@ public class CacheRedisCaffeineService {
 	
 	private final Logger logger = LoggerFactory.getLogger(CacheRedisCaffeineService.class);
 
-	@Cacheable(key = "'cache_user_id_' + #id", value = "userIdCache", cacheManager = "cacheManager")
+	@Cacheable(key = "'cache_user_id_' + #id", value = "userIdCache", cacheManager = "cacheManager", sync = true)
 	public UserVO get(long id) {
 		logger.info("get by id from db");
 		UserVO user = new UserVO();

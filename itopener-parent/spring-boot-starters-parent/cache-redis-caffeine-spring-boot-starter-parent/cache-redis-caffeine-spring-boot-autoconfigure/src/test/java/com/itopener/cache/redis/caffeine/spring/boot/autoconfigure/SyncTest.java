@@ -1,7 +1,5 @@
 package com.itopener.cache.redis.caffeine.spring.boot.autoconfigure;
 
-import java.util.Random;
-
 /**  
  * @author fuwei.deng
  * @date 2018年2月11日 上午9:59:30
@@ -21,7 +19,8 @@ public class SyncTest {
 				@Override
 				public void run() {
 					try {
-						new SyncTest().exec("123-" + new Random().nextInt());
+//						new SyncTest().exec("123-" + new Random().nextInt());
+						new SyncTest().exec(new User("fuwei"));
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -36,5 +35,33 @@ public class SyncTest {
 			System.out.println(key);
 			Thread.sleep(5000);
 		}
+	}
+	@Override
+	public String toString() {
+		return super.toString();
+	}
+	
+	class User{
+		
+		private String name;
+
+		public User(String name) {
+			super();
+			this.name = name;
+		}
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String toString() {
+			return this.name;
+		}
+		
 	}
 }
