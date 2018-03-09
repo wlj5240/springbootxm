@@ -1,6 +1,6 @@
 package com.itopener.demo.druid.model;
 
-import java.io.Serializable;
+import com.itopener.framework.base.BaseCondition;
 
 
 /**  
@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Date 2017年6月9日 下午3:10:58
  * @version 1.0.0
  */
-public class User implements Serializable {
+public class User extends BaseCondition {
 
 	/** */
 	private static final long serialVersionUID = -7679966022668879878L;

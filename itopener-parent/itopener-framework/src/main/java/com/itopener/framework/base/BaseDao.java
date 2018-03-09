@@ -20,7 +20,7 @@ import com.github.pagehelper.PageHelper;
 public class BaseDao  {
 	
 	@Resource(name="sqlSessionTemplate")
-	private SqlSession sqlSession;
+	protected SqlSession sqlSession;
 	
 	public SqlSession getSqlSession() {
 		return sqlSession;
@@ -58,19 +58,19 @@ public class BaseDao  {
 		sqlSession.select(sqlid, object, rowBounds, resultHandler);
 	}
 	
-	public <E> List<E> selectList(String sqlid) {
+	public <T> List<T> selectList(String sqlid) {
 		return sqlSession.selectList(sqlid);
 	}
 	
-	public <E> List<E> selectList(String sqlid, Object object) {
+	public <T> List<T> selectList(String sqlid, Object object) {
 		return sqlSession.selectList(sqlid, object);
 	}
 
-	public <E> List<E> selectList(String sqlid, Object object, RowBounds arg3) {
+	public <T> List<T> selectList(String sqlid, Object object, RowBounds arg3) {
 		return sqlSession.selectList(sqlid, object, arg3);
 	}
 	
-	public <E> List<E> selectPage(String sqlid, BaseCondition condition, int pageNum, int pageSize) {
+	public <T> List<T> selectPage(String sqlid, BaseCondition condition, int pageNum, int pageSize) {
 		PageHelper.startPage(pageNum, pageSize, false);
 		return sqlSession.selectList(sqlid, condition);
 	}

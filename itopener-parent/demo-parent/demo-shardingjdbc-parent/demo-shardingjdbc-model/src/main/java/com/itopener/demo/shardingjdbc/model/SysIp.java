@@ -1,14 +1,15 @@
 package com.itopener.demo.shardingjdbc.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
+
+import com.itopener.framework.base.BaseCondition;
 
 /**
  * @author fuwei.deng
  * @date 2017年12月18日 下午1:22:25
  * @version 1.0.0
  */
-public class SysIp implements Serializable {
+public class SysIp extends BaseCondition {
 
 	/** */
 	private static final long serialVersionUID = -1996345124584179178L;

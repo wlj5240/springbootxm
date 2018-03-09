@@ -1,15 +1,16 @@
 package com.itopener.demo.shardingjdbc.model;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+
+import com.itopener.framework.base.BaseCondition;
 
 /**
  * @desc 
  * @author fuwei.deng
  * @date 2017-12-15 18:47:07
  */
-public class Order implements Serializable {
+public class Order extends BaseCondition {
 
 	/** SerialVersionUID*/
 	private static final long serialVersionUID = -1135753261807170475L;
