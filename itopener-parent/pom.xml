@@ -22,7 +22,7 @@
 		<java.version>1.8</java.version>
 		<fastjson.version>1.2.31</fastjson.version>
 		<drools.version>6.5.0.Final</drools.version>
-		<curator-client.version>2.11.1</curator-client.version>
+		<curator.version>2.11.1</curator.version>
 		<pagehelper-starter.version>1.1.0</pagehelper-starter.version>
 		<mybatis-starter.version>1.2.0</mybatis-starter.version>
 		<sharding-jdbc.version>2.0.1</sharding-jdbc.version>
@@ -33,6 +33,8 @@
 		<spring-data-hadoop.version>2.5.0.RELEASE</spring-data-hadoop.version>
 		<elastic-job.version>2.1.5</elastic-job.version>
 		<redisson.version>3.5.6</redisson.version>
+		<dubbo-spring-boot-starter.version>0.1.0</dubbo-spring-boot-starter.version>
+		<dubbo.version>2.5.10</dubbo.version>
 	</properties>
 
 	<dependencyManagement>
@@ -121,7 +123,23 @@
 			<dependency>
 				<groupId>org.apache.curator</groupId>
 				<artifactId>curator-client</artifactId>
-				<version>${curator-client.version}</version>
+				<version>${curator.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.curator</groupId>
+				<artifactId>curator-framework</artifactId>
+				<version>${curator.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -160,6 +178,18 @@
 				<groupId>org.redisson</groupId>
 				<artifactId>redisson</artifactId>
 				<version>${redisson.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba.boot</groupId>
+				<artifactId>dubbo-spring-boot-starter</artifactId>
+				<version>${dubbo-spring-boot-starter.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo-registry-zookeeper</artifactId>
+		        <version>${dubbo.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
