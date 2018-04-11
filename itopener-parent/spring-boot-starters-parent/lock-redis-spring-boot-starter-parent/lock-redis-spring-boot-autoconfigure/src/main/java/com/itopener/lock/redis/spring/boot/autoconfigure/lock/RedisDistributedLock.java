@@ -113,6 +113,9 @@ public class RedisDistributedLock extends AbstractDistributedLock {
 			return result != null && result > 0;
 		} catch (Exception e) {
 			logger.error("release lock occured an exception", e);
+		} finally {
+			// 清除掉ThreadLocal中的数据，避免内存溢出
+			lockFlag.remove();
 		}
 		return false;
 	}
