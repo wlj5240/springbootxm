@@ -70,11 +70,11 @@ public class DistributedLockAspectConfiguration {
 			return pjp.proceed();
 		} catch (Exception e) {
 			logger.error("execute locked method occured an exception", e);
+			throw e;
 		} finally {
 			boolean releaseResult = distributedLock.releaseLock(key);
 			logger.debug("release lock : " + key + (releaseResult ? " success" : " failed"));
 		}
-		return null;
 	}
 	
 	/**
